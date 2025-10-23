@@ -2,8 +2,9 @@
 
 import * as React from "react";
 import Script from "next/script";
-import { TRPCReactProvider } from "@/trpc/client";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+
+import { TRPCReactProvider } from "@/trpc/client";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (

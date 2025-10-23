@@ -1,7 +1,8 @@
 // Hook to featch all workfolws using suspese
 
-import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
+
+import { useTRPC } from "@/trpc/client";
 
 export const useSuspenseWorkflows = () => {
   const trpc = useTRPC();

@@ -38,6 +38,6 @@ export const workflowRouter = createTRPCRouter({
     });
   }),
   getMany: authorizedProcedure.query(async ({ ctx: { db, userId } }) => {
-     return await getAllWorkflows(db, userId);
-   }),
+    return await getAllWorkflows(db, userId);
+  }),
 });

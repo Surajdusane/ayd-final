@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  await requireUnAuth();  
+  await requireUnAuth();
 
   return (
     <div className="h-screen p-2">

@@ -20,9 +20,9 @@ type UpdateWorkflowName = {
 };
 
 type GetWorkflowsByWorkflowId = {
-    workflowId: string;
-    userId: string;
-}
+  workflowId: string;
+  userId: string;
+};
 
 export const createWorkflow = async (db: Database, data: CreateWorkflow) => {
   return await db.insert(workFlows).values(data).returning();
@@ -45,7 +45,10 @@ export const updateWorkflowName = async (db: Database, data: UpdateWorkflowName)
 
 export const getWorkflowByWorkflowId = async (db: Database, data: GetWorkflowsByWorkflowId) => {
   const { workflowId, userId } = data;
-  const [result] = await db.select().from(workFlows).where(and(eq(workFlows.id, workflowId), eq(workFlows.userId, userId)));
+  const [result] = await db
+    .select()
+    .from(workFlows)
+    .where(and(eq(workFlows.id, workflowId), eq(workFlows.userId, userId)));
   return result;
 };
 
