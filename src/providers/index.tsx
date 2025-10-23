@@ -1,0 +1,21 @@
+"use client";
+
+import * as React from "react";
+import Script from "next/script";
+import { TRPCReactProvider } from "@/trpc/client";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+      enableColorScheme
+    >
+      <TRPCReactProvider>{children}</TRPCReactProvider>
+      <Script src="https://accounts.google.com/gsi/client" />
+    </NextThemesProvider>
+  );
+}
