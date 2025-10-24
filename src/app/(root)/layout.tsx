@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${fontSans.variable} ${fontMono.variable} ${lora.variable}  overscroll-none font-sans whitespace-pre-line antialiased`}
+        className={`${fontSans.variable} ${fontMono.variable} ${lora.variable} overscroll-none font-sans whitespace-pre-line antialiased`}
       >
         <Providers>
           {children}

@@ -14,17 +14,17 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "h-screen shrink-0 flex-col desktop:overflow-hidden desktop:rounded-tl-[10px] desktop:rounded-bl-[10px] justify-between fixed top-0 pb-4 items-center hidden md:flex z-50 transition-all duration-200 ease-&lsqb;cubic-bezier(0.4,0,0.2,1)&rsqb;",
-        "bg-background border-r border-border hidden",
-        isExpanded ? "w-60" : "w-[70px]",
+        "desktop:overflow-hidden desktop:rounded-tl-[10px] desktop:rounded-bl-[10px] ease-&lsqb;cubic-bezier(0.4,0,0.2,1)&rsqb; fixed top-0 z-50 hidden h-screen shrink-0 flex-col items-center justify-between pb-4 transition-all duration-200 md:flex",
+        "bg-background border-border hidden border-r",
+        isExpanded ? "w-60" : "w-[70px]"
       )}
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}
     >
       <div
         className={cn(
-          "absolute top-0 left-0 h-[70px] flex items-center justify-center bg-background border-b border-border transition-all duration-200 ease-&lsqb;cubic-bezier(0.4,0,0.2,1)&rsqb;",
-          isExpanded ? "w-full" : "w-[69px]",
+          "bg-background border-border ease-&lsqb;cubic-bezier(0.4,0,0.2,1)&rsqb; absolute top-0 left-0 flex h-[70px] items-center justify-center border-b transition-all duration-200",
+          isExpanded ? "w-full" : "w-[69px]"
         )}
       >
         <Link href="/" className="absolute left-[22px] transition-none">
@@ -32,10 +32,9 @@ export function Sidebar() {
         </Link>
       </div>
 
-      <div className="flex flex-col w-full pt-[70px] flex-1">
+      <div className="flex w-full flex-1 flex-col pt-[70px]">
         <MainMenu isExpanded={isExpanded} />
       </div>
-
     </aside>
   );
 }
