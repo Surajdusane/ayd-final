@@ -1,3 +1,4 @@
+"use client";
 // Hook to featch all workfolws using suspese
 
 import { useRouter } from "next/navigation";
