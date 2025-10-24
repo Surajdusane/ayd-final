@@ -1,17 +1,25 @@
 import React, { Suspense } from "react";
+import { redirect } from "next/navigation";
 import { ErrorBoundary } from "react-error-boundary";
 
-import LoadingPage from "@/components/global/loading-page";
-import { HydrateClient, prefetch, trpc } from "@/trpc/server";
+import { getQueryClient, HydrateClient, prefetch, trpc } from "@/trpc/server";
 
-const layout = ({ children }: { children: React.ReactNode }) => {
-  prefetch(trpc.user.me.queryOptions());
+const layout = async ({ children }: { children: React.ReactNode }) => {
+  const queryClient = getQueryClient();
+  const user = await queryClient.fetchQuery(trpc.user.me.queryOptions());
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  if (!user.fullName) {
+    redirect("/setup");
+  }
+
   return (
     <HydrateClient>
       <ErrorBoundary fallback={<div>Something went wrong</div>}>
-        <Suspense fallback={<LoadingPage />}>
-          <div className="h-full w-full">{children}</div>
-        </Suspense>
+        <div className="">{children}</div>
       </ErrorBoundary>
     </HydrateClient>
   );

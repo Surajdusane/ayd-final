@@ -16,6 +16,7 @@ export const users = pgTable("users", {
 export const workFlows = pgTable("workflows", {
   id: text("id").primaryKey().notNull().$defaultFn(generateId),
   name: text("name"),
+  description: text("description"),
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),

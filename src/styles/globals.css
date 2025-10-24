@@ -125,3 +125,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+h3 {
+  @apply text-xl font-medium mb-2;
+}
+
+p {
+  @apply text-sm text-muted-foreground mb-6
+}
