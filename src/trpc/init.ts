@@ -1,8 +1,9 @@
 import { cache } from "react";
 import { db } from "@/db";
-import { createClient } from "@/utils/supabase/server";
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
+
+import { createClient } from "@/utils/supabase/server";
 
 export async function createTRPCContextInner() {
   try {

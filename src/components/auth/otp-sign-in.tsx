@@ -2,19 +2,19 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { verifyOtpAction } from "@/actions/verify-otp-action";
-import { createClient } from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { verifyOtpAction } from "@/actions/verify-otp-action";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { Spinner } from "@/components/ui/spinner";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { cn } from "@/lib/utils";
+import { createClient } from "@/utils/supabase/client";
 
 const formSchema = z.object({
   email: z.string().email(),

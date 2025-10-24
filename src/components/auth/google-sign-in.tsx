@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { createClient } from "@/utils/supabase/client";
 
 import { Icons } from "@/components/ui/icons";
+import { createClient } from "@/utils/supabase/client";
 
 import { SubmitButton } from "../ui/submit-button";
 

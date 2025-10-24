@@ -29,40 +29,32 @@
     "^@shikijs/(.*)$",
     "^unist-(.*)$",
     "",
+    "^@/actions/(.*)$",
     "^@/app/(.*)$",
     "^@/components/ui/(.*)$",
     "^@/components/(.*)$",
-    "^@/registry/(.*)$",
-    "^@/lib/(.*)$",
-    "^@/content/(.*)$",
-    "^@/trpc/(.*)$",
+    "^@/db/(.*)$",
     "^@/features/(.*)$",
-    "",
     "^@/hooks/(.*)$",
+    "^@/lib/(.*)$",
+    "^@/providers/(.*)$",
+    "^@/styles/(.*)$",
+    "^@/trpc/(.*)$",
+    "^@/utils/(.*)$",
+    "^@/utils/supabase/(.*)$",
     "",
     "^@/types/(.*)$",
     "",
     "^[./]"
   ],
-  "importOrderParserPlugins": [
-    "typescript",
-    "jsx",
-    "decorators-legacy"
-  ],
-  "importOrderTypeScriptVersion": "5.0.0",
-  "importOrderCaseSensitive": false,
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true,
-  "importOrderGroupNamespaceSpecifiers": true,
+  "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
   "overrides": [
     {
       "files": "*.mdx",
       "options": {
         "printWidth": 80,
         "proseWrap": "always",
-        "plugins": [
-          "prettier-plugin-tailwindcss"
-        ]
+        "plugins": ["prettier-plugin-tailwindcss"]
       }
     }
   ]

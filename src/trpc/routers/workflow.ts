@@ -1,3 +1,5 @@
+import { generateSlug } from "random-word-slugs";
+
 import {
   createWorkflow,
   getAllWorkflows,
@@ -5,7 +7,6 @@ import {
   removeWorkflow,
   updateWorkflowName,
 } from "@/db/queries";
-import { generateSlug } from "random-word-slugs";
 
 import { createTRPCRouter } from "../init";
 import { authorizedProcedure } from "../procedures/authorizedProcedure";

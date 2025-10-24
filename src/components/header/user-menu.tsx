@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/utils/supabase/client";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -15,8 +14,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ThemeSwitch } from "@/components/ui/theme-switch";
-
 import { useUserQuery } from "@/hooks/use-user";
+import { createClient } from "@/utils/supabase/client";
 
 type Props = {
   onlySignOut?: boolean;

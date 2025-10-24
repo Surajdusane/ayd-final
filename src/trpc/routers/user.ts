@@ -1,5 +1,4 @@
 import { deleteUser, getUserById, updateUser } from "@/db/queries/user";
-
 import { createTRPCRouter } from "@/trpc/init";
 
 import { authorizedProcedure } from "../procedures/authorizedProcedure";
