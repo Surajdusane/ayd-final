@@ -1,11 +1,11 @@
 import React from "react";
+import Link from "next/link";
 import { inferOutput } from "@trpc/tanstack-react-query";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
 import { trpc } from "@/trpc/server";
-import Link from "next/link";
 
 type WorkflowCardProps = inferOutput<typeof trpc.workflow.getMany>[number];
 

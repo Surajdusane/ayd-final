@@ -1,4 +1,3 @@
-
 import { RouterOutputs } from "@/trpc/routers/_app";
 
 import { DeleteDocumentActions } from "./delete-document-button";

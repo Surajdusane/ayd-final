@@ -12,9 +12,7 @@ const page = async ({ params }: { params: Promise<{ workflowid: string }> }) => 
     })
   );
   await requireAuth();
-  return <Suspense fallback={<div>Loading...</div>}>
-    
-  </Suspense>;
+  return <Suspense fallback={<div>Loading...</div>}></Suspense>;
 };
 
 export default page;

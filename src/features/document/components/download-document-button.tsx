@@ -1,10 +1,11 @@
+import { useState } from "react";
+import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
 import { Spinner } from "@/components/ui/spinner";
 import { useDownloadDocument } from "@/hooks/use-document-download";
 import { RouterOutputs } from "@/trpc/routers/_app";
-import { useState } from "react";
-import { toast } from "sonner";
 
 type DocumentOutput = RouterOutputs["documents"]["getById"];
 

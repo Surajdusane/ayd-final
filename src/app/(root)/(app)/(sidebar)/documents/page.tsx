@@ -5,8 +5,8 @@ import { DocumetView } from "@/features/document/components/document-view";
 import { getQueryClient, trpc } from "@/trpc/server";
 
 const page = async () => {
-  const queryClient = getQueryClient()
-  void queryClient.prefetchQuery(trpc.documents.getAllByUser.queryOptions())
+  const queryClient = getQueryClient();
+  void queryClient.prefetchQuery(trpc.documents.getAllByUser.queryOptions());
   return (
     <div>
       <DocumentHeader />

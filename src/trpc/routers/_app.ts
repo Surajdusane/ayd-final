@@ -1,4 +1,5 @@
 import { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
+
 import { createTRPCRouter } from "../init";
 import { documentsRouter } from "./documents";
 import { userRouter } from "./user";

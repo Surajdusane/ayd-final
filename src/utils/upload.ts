@@ -25,9 +25,7 @@ export async function resumableUpload(
   // Get Supabase URL from environment
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   if (!supabaseUrl) {
-    throw new Error(
-      "NEXT_PUBLIC_SUPABASE_URL environment variable is not set"
-    );
+    throw new Error("NEXT_PUBLIC_SUPABASE_URL environment variable is not set");
   }
 
   const filename = stripSpecialCharacters(file.name);

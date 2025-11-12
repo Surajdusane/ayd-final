@@ -1,22 +1,25 @@
 "use client";
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { DocumetGetStarted } from './document-get-started';
-import { useTRPC } from '@/trpc/client';
-import DocumentItem from './document-item';
+
+import { useSuspenseQuery } from "@tanstack/react-query";
+
+import { useTRPC } from "@/trpc/client";
+
+import { DocumetGetStarted } from "./document-get-started";
+import DocumentItem from "./document-item";
 
 export function DocumetView() {
-  const trpc = useTRPC()
-  const { data: documents } = useSuspenseQuery(trpc.documents.getAllByUser.queryOptions())
-  
+  const trpc = useTRPC();
+  const { data: documents } = useSuspenseQuery(trpc.documents.getAllByUser.queryOptions());
+
   if (documents.length === 0) {
     return <DocumetGetStarted />;
   }
 
   return (
-    <div className='flex justify-start gap-4 pt-4 '>
+    <div className="flex justify-start gap-4 pt-4">
       {documents.map((document) => (
         <DocumentItem key={document.id} document={document} />
       ))}
     </div>
-  )
+  );
 }

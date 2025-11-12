@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
 import { RouterOutputs } from "@/trpc/routers/_app";
+
 import { DocumentItemActions } from "./document-item-action";
 
 type DocumentOutput = RouterOutputs["documents"]["getById"];
@@ -37,4 +38,3 @@ const DocumentItem = ({ document }: { document: DocumentOutput }) => {
 };
 
 export default DocumentItem;
-

@@ -23,13 +23,13 @@ export type CreateDocumentParams = {
 };
 
 export type DeleteDocumentParams = {
-    id: string;
-    userId: string;
-}
+  id: string;
+  userId: string;
+};
 
 export type GetAllDocumentsByUserParams = {
   userId: string;
-}
+};
 
 export const getDocumentById = async (db: Database, data: getDocumentByIdParams) => {
   const { id, userId } = data;
@@ -73,9 +73,7 @@ export const createDocument = async (db: Database, data: CreateDocumentParams) =
 export const deleteDocument = async (db: Database, data: DeleteDocumentParams) => {
   const { id, userId } = data;
 
-  await db
-    .delete(documents)
-    .where(and(eq(documents.path, id), eq(documents.userId, userId)));
+  await db.delete(documents).where(and(eq(documents.path, id), eq(documents.userId, userId)));
 
   return { id };
 };
@@ -83,10 +81,7 @@ export const deleteDocument = async (db: Database, data: DeleteDocumentParams) =
 export const getAllDocumentsByUser = async (db: Database, data: GetAllDocumentsByUserParams) => {
   const { userId } = data;
 
-  const result = await db
-    .select()
-    .from(documents)
-    .where(eq(documents.userId, userId));
+  const result = await db.select().from(documents).where(eq(documents.userId, userId));
 
   return result;
 };

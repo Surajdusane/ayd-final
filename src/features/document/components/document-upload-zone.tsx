@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { stripSpecialCharacters } from "@/utils";
 import { useDropzone, type FileRejection } from "react-dropzone";
 import { toast } from "sonner";
 
+import { Input } from "@/components/ui/input";
 import { useUserQuery } from "@/hooks/use-user";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/utils/supabase/client";
-import { stripSpecialCharacters } from "@/utils";
-import { Input } from "@/components/ui/input";
 
 type UploadData = {
   file_path: string[];
@@ -51,11 +51,9 @@ export function DocumentUploadZone({ onUpload, children }: Props) {
       const timestamp = Date.now();
       const filePath = `${user.id}/${timestamp}-${filename}`;
 
-      const { data, error } = await supabase.storage
-        .from("documents")
-        .upload(filePath, file, {
-          cacheControl: "3600",
-        });
+      const { data, error } = await supabase.storage.from("documents").upload(filePath, file, {
+        cacheControl: "3600",
+      });
 
       if (error) {
         throw error;
@@ -83,22 +81,15 @@ export function DocumentUploadZone({ onUpload, children }: Props) {
     onDrop,
     onDropRejected: (rejections: FileRejection[]) => {
       rejections.forEach((rejection) => {
-        const hasLargeFile = rejection.errors.some(
-          ({ code }) => code === "file-too-large"
-        );
-        const hasInvalidType = rejection.errors.some(
-          ({ code }) => code === "file-invalid-type"
-        );
+        const hasLargeFile = rejection.errors.some(({ code }) => code === "file-too-large");
+        const hasInvalidType = rejection.errors.some(({ code }) => code === "file-invalid-type");
 
         if (hasLargeFile) {
           toast.error("File size is too large (max 5MB).", { duration: 2500 });
         }
 
         if (hasInvalidType) {
-          toast.error(
-            "File type not supported. Only .doc and .docx files are allowed.",
-            { duration: 2500 }
-          );
+          toast.error("File type not supported. Only .doc and .docx files are allowed.", { duration: 2500 });
         }
       });
     },
@@ -106,17 +97,13 @@ export function DocumentUploadZone({ onUpload, children }: Props) {
     maxFiles: 1,
     accept: {
       "application/msword": [".doc"],
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        [".docx"],
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
     },
     disabled: isUploading || !user?.id || userLoading,
   });
 
   return (
-    <div
-      className="relative h-full"
-      {...getRootProps({ onClick: (evt) => evt.stopPropagation() })}
-    >
+    <div className="relative h-full" {...getRootProps({ onClick: (evt) => evt.stopPropagation() })}>
       <div className="pointer-events-none absolute top-0 right-0 left-0 z-51 h-[calc(100vh-150px)] w-full">
         <div
           className={cn(
@@ -132,9 +119,7 @@ export function DocumentUploadZone({ onUpload, children }: Props) {
               One file at a time.
             </p>
 
-            <span className="text-xs text-muted-foreground">
-              Max file size 5MB (.doc, .docx)
-            </span>
+            <span className="text-muted-foreground text-xs">Max file size 5MB (.doc, .docx)</span>
           </div>
         </div>
       </div>

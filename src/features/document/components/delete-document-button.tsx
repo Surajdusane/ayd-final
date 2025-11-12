@@ -1,10 +1,11 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
 import { Spinner } from "@/components/ui/spinner";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useTRPC } from "@/trpc/client";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
 
 export const DeleteDocumentActions = ({ documentpath }: { documentpath: string }) => {
   const trpc = useTRPC();

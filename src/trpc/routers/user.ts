@@ -10,7 +10,7 @@ export const userRouter = createTRPCRouter({
   me: authorizedProcedure.query(async ({ ctx: { db, session } }) => {
     try {
       const cached = await redis.get(`user:${session.user.id}`);
-      if (cached) return cached 
+      if (cached) return cached;
     } catch (error) {
       console.error("Redis get error:", error);
     }
