@@ -9,8 +9,8 @@ import { cn } from "@/lib/utils";
 
 const icons = {
   "/": () => <Icons.Overview size={20} />,
+  "/documents": () => <Icons.Invoice size={20} />,
   "/transactions": () => <Icons.Transactions size={20} />,
-  "/invoices": () => <Icons.Invoice size={20} />,
   "/tracker": () => <Icons.Tracker size={20} />,
   "/customers": () => <Icons.Customers size={20} />,
   "/vault": () => <Icons.Vault size={20} />,
@@ -23,6 +23,10 @@ const items = [
   {
     path: "/",
     name: "Workflows",
+  },
+  {
+    path: "/documents",
+    name: "Documents",
   },
   {
     path: "/inbox",
@@ -46,14 +50,6 @@ const items = [
         name: "Import",
       },
       { path: "/transactions?createTransaction=true", name: "Create new" },
-    ],
-  },
-  {
-    path: "/invoices",
-    name: "Invoices",
-    children: [
-      { path: "/invoices/products", name: "Products" },
-      { path: "/invoices?type=create", name: "Create new" },
     ],
   },
   {

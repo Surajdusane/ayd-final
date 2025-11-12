@@ -23,7 +23,7 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.6531 0.2329 25.96);
-  --destructive-foreground: oklch(0.6531 0.2329 25.96);
+  --destructive-foreground: oklch(0.934 0 0);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -59,7 +59,7 @@
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.934 0 0);
   --destructive: oklch(0.6531 0.2329 25.96);
-  --destructive-foreground: oklch(0.6531 0.2329 25.96);
+  --destructive-foreground: oklch(0.934 0 0);
   --border: oklch(0.269 0 0);
   --input: oklch(0.269 0 0);
   --ring: oklch(0.556 0 0);
@@ -130,6 +130,19 @@ h3 {
   @apply text-xl font-medium mb-2;
 }
 
+h4 {
+  @apply text-sm font-medium mb-2;
+}
+
 p {
   @apply text-sm text-muted-foreground mb-6
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
