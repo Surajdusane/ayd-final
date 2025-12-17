@@ -15,6 +15,20 @@
       "when": 1762751258366,
       "tag": "0001_redundant_shockwave",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1765879498557,
+      "tag": "0002_spicy_pet_avengers",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1765880255498,
+      "tag": "0003_melodic_gateway",
+      "breakpoints": true
     }
   ]
 }

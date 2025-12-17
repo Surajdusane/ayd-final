@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/ui/icons";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 
-import { useCreateWorkflow } from "../hooks/use-workflows";
+import { useCreateWorkflow } from "../hooks/use-create-workflows";
 
 const WorkflowHeader = () => {
   const createWorkflow = useCreateWorkflow();

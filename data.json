@@ -1,0 +1,263 @@
+{
+    "nodes": [
+        {
+            "id": "formId",
+            "type": "FORM_NODE",
+            "dragHandle": ".drag-handle",
+            "data": {
+                "type": "FORM_INPUTS",
+                "inputs": {},
+                "parentTaskType": "FORM_NODE",
+                "dynamicInputs": [
+                    {
+                        "type": "TEXT",
+                        "name": "text",
+                        "label": "Enter Text",
+                        "placeholder": "Enter text...",
+                        "description": "Enter your text",
+                        "disabled": false,
+                        "value": "",
+                        "validationType": "NONE",
+                        "required": true,
+                        "min": 0,
+                        "max": 1000,
+                        "outputType": "STRING",
+                        "handleId": "598b18ef-8a36-42d4-aa73-0549ba25f9c4"
+                    },
+                    {
+                        "type": "TEXTAREA",
+                        "name": "Textarea",
+                        "label": "Textarea",
+                        "placeholder": "Enter text...",
+                        "description": "Enter your textarea",
+                        "disabled": false,
+                        "value": "",
+                        "validationType": "NONE",
+                        "required": true,
+                        "min": 0,
+                        "max": 1000,
+                        "outputType": "STRING",
+                        "handleId": "d40daa84-9037-40fb-81ca-18124dac36e6"
+                    },
+                    {
+                        "type": "NUMBER",
+                        "name": "Number",
+                        "label": "Number",
+                        "placeholder": "Enter number...",
+                        "description": "Enter your number",
+                        "disabled": false,
+                        "value": "",
+                        "validationType": "NONE",
+                        "required": true,
+                        "min": 0,
+                        "max": 1000,
+                        "outputType": "NUMBER",
+                        "handleId": "df990309-8e37-4cfe-b3bd-1d600ae74ef7"
+                    },
+                    {
+                        "type": "NUMBER",
+                        "name": "Number",
+                        "label": "Number",
+                        "placeholder": "Enter number...",
+                        "description": "Enter your number",
+                        "disabled": false,
+                        "value": "",
+                        "validationType": "NONE",
+                        "required": true,
+                        "min": 0,
+                        "max": 1000,
+                        "outputType": "NUMBER",
+                        "handleId": "bbd03b53-868d-4fb7-87ff-839d88116013"
+                    }
+                ]
+            },
+            "position": {
+                "x": 0,
+                "y": 0
+            },
+            "measured": {
+                "width": 420,
+                "height": 356
+            },
+            "selected": false
+        },
+        {
+            "id": "3870667e-eb87-4ec6-a453-6fb4eae4dd6f",
+            "type": "OPREATION_NODE",
+            "dragHandle": ".drag-handle",
+            "data": {
+                "type": "ADDITION_OPREATION",
+                "inputs": {
+                    "Second number": "855"
+                },
+                "parentTaskType": "OPREATION_NODE"
+            },
+            "position": {
+                "x": 531.1732200018059,
+                "y": -327.7999930891672
+            },
+            "measured": {
+                "width": 420,
+                "height": 353
+            },
+            "selected": false,
+            "dragging": false
+        },
+        {
+            "id": "f6fb4799-73a8-40ab-936e-d86685e6409e",
+            "type": "DOCUMENT_NODE",
+            "dragHandle": ".drag-handle",
+            "data": {
+                "documentName": "increment_kass.docx",
+                "type": "DOCUMENT_NODE",
+                "inputs": {},
+                "parentTaskType": "DOCUMENT_NODE",
+                "dynamicInputs": [
+                    {
+                        "name": "ctc",
+                        "handleId": "7cf78d9d-ea20-41a3-afc4-1b047a719dae"
+                    },
+                    {
+                        "name": "des",
+                        "handleId": "3f74c227-8c15-40d3-90cd-5ea8b4fea7d9"
+                    },
+                    {
+                        "name": "doi",
+                        "handleId": "d8126220-c7a8-4a5e-abf4-75bf6260f3dc"
+                    },
+                    {
+                        "name": "dol",
+                        "handleId": "29929333-63ad-47af-be41-523d345c2d93"
+                    },
+                    {
+                        "name": "empi",
+                        "handleId": "1a5b6c95-c014-4037-b2f2-684cc98d2a5c"
+                    },
+                    {
+                        "name": "name",
+                        "handleId": "75e1fbb1-3a6b-4179-b273-cd5202a8c9a8"
+                    },
+                    {
+                        "name": "yoi",
+                        "handleId": "a8a0ebc1-f5f9-4c96-a2b8-b368bd67dfc2"
+                    }
+                ]
+            },
+            "position": {
+                "x": 1710.6176510248608,
+                "y": 70.15821187666873
+            },
+            "measured": {
+                "width": 420,
+                "height": 434
+            },
+            "selected": false,
+            "dragging": false
+        },
+        {
+            "id": "386b7ba4-b8c2-4b3a-b795-aa077b9534e5",
+            "type": "OPREATION_NODE",
+            "dragHandle": ".drag-handle",
+            "data": {
+                "type": "NUMBER_TO_STRING_OPREATION",
+                "inputs": {},
+                "parentTaskType": "OPREATION_NODE"
+            },
+            "position": {
+                "x": 1095.4157092129285,
+                "y": -256.8966199340693
+            },
+            "measured": {
+                "width": 420,
+                "height": 271
+            },
+            "selected": false,
+            "dragging": false
+        },
+        {
+            "id": "8bebe2f4-a69a-4914-ac15-ab14b0ff4968",
+            "type": "OPREATION_NODE",
+            "dragHandle": ".drag-handle",
+            "data": {
+                "type": "SUFFIX_OPREATION",
+                "inputs": {
+                    "Suffix": "25"
+                },
+                "parentTaskType": "OPREATION_NODE"
+            },
+            "position": {
+                "x": 887.3512913163272,
+                "y": 335.04091356541574
+            },
+            "measured": {
+                "width": 420,
+                "height": 353
+            },
+            "selected": false,
+            "dragging": false
+        }
+    ],
+    "edges": [
+        {
+            "source": "formId",
+            "sourceHandle": "df990309-8e37-4cfe-b3bd-1d600ae74ef7",
+            "target": "3870667e-eb87-4ec6-a453-6fb4eae4dd6f",
+            "targetHandle": "First number",
+            "animated": true,
+            "id": "xy-edge__formIddf990309-8e37-4cfe-b3bd-1d600ae74ef7-3870667e-eb87-4ec6-a453-6fb4eae4dd6fFirst number",
+            "selected": false
+        },
+        {
+            "source": "3870667e-eb87-4ec6-a453-6fb4eae4dd6f",
+            "sourceHandle": "Result",
+            "target": "386b7ba4-b8c2-4b3a-b795-aa077b9534e5",
+            "targetHandle": "Number",
+            "animated": true,
+            "id": "xy-edge__3870667e-eb87-4ec6-a453-6fb4eae4dd6fResult-386b7ba4-b8c2-4b3a-b795-aa077b9534e5Number",
+            "selected": false
+        },
+        {
+            "source": "386b7ba4-b8c2-4b3a-b795-aa077b9534e5",
+            "sourceHandle": "Converted Number to String",
+            "target": "f6fb4799-73a8-40ab-936e-d86685e6409e",
+            "targetHandle": "7cf78d9d-ea20-41a3-afc4-1b047a719dae",
+            "animated": true,
+            "id": "xy-edge__386b7ba4-b8c2-4b3a-b795-aa077b9534e5Converted Number to String-f6fb4799-73a8-40ab-936e-d86685e6409e7cf78d9d-ea20-41a3-afc4-1b047a719dae",
+            "selected": false
+        },
+        {
+            "source": "formId",
+            "sourceHandle": "598b18ef-8a36-42d4-aa73-0549ba25f9c4",
+            "target": "f6fb4799-73a8-40ab-936e-d86685e6409e",
+            "targetHandle": "3f74c227-8c15-40d3-90cd-5ea8b4fea7d9",
+            "animated": true,
+            "id": "xy-edge__formId598b18ef-8a36-42d4-aa73-0549ba25f9c4-f6fb4799-73a8-40ab-936e-d86685e6409e3f74c227-8c15-40d3-90cd-5ea8b4fea7d9",
+            "selected": false
+        },
+        {
+            "source": "formId",
+            "sourceHandle": "d40daa84-9037-40fb-81ca-18124dac36e6",
+            "target": "f6fb4799-73a8-40ab-936e-d86685e6409e",
+            "targetHandle": "d8126220-c7a8-4a5e-abf4-75bf6260f3dc",
+            "animated": true,
+            "id": "xy-edge__formIdd40daa84-9037-40fb-81ca-18124dac36e6-f6fb4799-73a8-40ab-936e-d86685e6409ed8126220-c7a8-4a5e-abf4-75bf6260f3dc",
+            "selected": false
+        },
+        {
+            "source": "formId",
+            "sourceHandle": "d40daa84-9037-40fb-81ca-18124dac36e6",
+            "target": "8bebe2f4-a69a-4914-ac15-ab14b0ff4968",
+            "targetHandle": "Text",
+            "animated": true,
+            "id": "xy-edge__formIdd40daa84-9037-40fb-81ca-18124dac36e6-8bebe2f4-a69a-4914-ac15-ab14b0ff4968Text"
+        },
+        {
+            "source": "8bebe2f4-a69a-4914-ac15-ab14b0ff4968",
+            "sourceHandle": "Value with suffix",
+            "target": "f6fb4799-73a8-40ab-936e-d86685e6409e",
+            "targetHandle": "29929333-63ad-47af-be41-523d345c2d93",
+            "animated": true,
+            "id": "xy-edge__8bebe2f4-a69a-4914-ac15-ab14b0ff4968Value with suffix-f6fb4799-73a8-40ab-936e-d86685e6409e29929333-63ad-47af-be41-523d345c2d93"
+        }
+    ]
+}

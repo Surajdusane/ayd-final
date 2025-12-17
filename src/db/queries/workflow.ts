@@ -1,7 +1,7 @@
 import { Database } from "@/db";
 import { and, eq } from "drizzle-orm";
 
-import { users, workFlows } from "../schema";
+import { workFlows } from "../schema";
 
 type CreateWorkflow = {
   name: string;

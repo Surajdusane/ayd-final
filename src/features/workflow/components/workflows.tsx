@@ -4,7 +4,7 @@ import { inferOutput } from "@trpc/tanstack-react-query";
 
 import { trpc } from "@/trpc/server";
 
-import { useSuspenseWorkflows } from "../hooks/use-workflows";
+import { useSuspenseWorkflows } from "../hooks/use-create-workflows";
 import WorkflowCard from "./workflow-card";
 
 type WorkflowCardsProps = inferOutput<typeof trpc.workflow.getMany>[number];

@@ -1,0 +1,1 @@
+ALTER TABLE "workflowdata" RENAME COLUMN "data" TO "flowdata";

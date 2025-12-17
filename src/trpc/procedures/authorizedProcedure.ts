@@ -4,4 +4,4 @@ import { baseProcedure } from "@/trpc/init";
 
 import { betterAuthMiddleware } from "../middlewares/supabse-auth";
 
-export const authorizedProcedure = baseProcedure.use(betterAuthMiddleware);
+export const authorizedProcedure = baseProcedure.use(betterAuthMiddleware)

@@ -24,6 +24,20 @@ export const workFlows = pgTable("workflows", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
+export const workflowData = pgTable("workflowdata", {
+  id: text("id").primaryKey().notNull().$defaultFn(generateId),
+  flowData: jsonb("flowdata"),
+  plan: jsonb("plan"),
+  workFlowId: text("work_flow_id")
+    .notNull()
+    .references(() => workFlows.id, { onDelete: "cascade" }),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
 export const documents = pgTable("documents", {
   id: text("id").primaryKey().notNull(),
   name: text(),

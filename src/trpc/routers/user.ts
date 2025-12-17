@@ -6,11 +6,19 @@ import { createTRPCRouter } from "@/trpc/init";
 import { authorizedProcedure } from "../procedures/authorizedProcedure";
 import { updateUserSchema } from "../schemas/user";
 
+type UserType = {
+  id: string;
+  email: string | null;
+  fullName: string | null;
+  created_at: Date;
+  updated_at: Date;
+}
+
 export const userRouter = createTRPCRouter({
   me: authorizedProcedure.query(async ({ ctx: { db, session } }) => {
     try {
       const cached = await redis.get(`user:${session.user.id}`);
-      if (cached) return cached;
+      if (cached) return cached as UserType;
     } catch (error) {
       console.error("Redis get error:", error);
     }

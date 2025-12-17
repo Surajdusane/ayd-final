@@ -126,17 +126,7 @@
   }
 }
 
-h3 {
-  @apply text-xl font-medium mb-2;
-}
 
-h4 {
-  @apply text-sm font-medium mb-2;
-}
-
-p {
-  @apply text-sm text-muted-foreground mb-6
-}
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
@@ -145,4 +135,25 @@ p {
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+
+.react-flow__node.selected #base-node {
+  @apply ring-3 ring-muted-foreground/25 shadow-lg;
+}
+
+/* Custom scrollbar styling. Thanks @shadcn-ui */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 5px;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }

@@ -5,6 +5,8 @@ import { WorkflowsList } from "@/features/workflow/components/workflows";
 import { prefetchWorkflows } from "@/features/workflow/server/prefetch";
 import { requireAuth } from "@/lib/auth-utils";
 
+export const dynamic = 'force-dynamic';
+
 const page = async () => {
   await requireAuth();
 

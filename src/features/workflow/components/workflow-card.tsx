@@ -19,6 +19,11 @@ const WorkflowCard = (props: WorkflowCardProps) => {
         </div>
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button variant="outline" size="icon" asChild>
+            <Link href={"/workflow/" + props.id} target="_blank">
+              <Icons.Info size={20} />
+            </Link>
+          </Button>
+          <Button variant="outline" size="icon" asChild>
             <Link href={"/workflow/edit/" + props.id} target="_blank">
               <Icons.Edit size={20} />
             </Link>

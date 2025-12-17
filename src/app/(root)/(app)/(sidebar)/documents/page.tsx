@@ -4,6 +4,8 @@ import DocumentHeader from "@/features/document/components/document-header";
 import { DocumetView } from "@/features/document/components/document-view";
 import { getQueryClient, trpc } from "@/trpc/server";
 
+export const dynamic = 'force-dynamic';
+
 const page = async () => {
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(trpc.documents.getAllByUser.queryOptions());

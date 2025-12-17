@@ -17,9 +17,10 @@ import { createClient } from "@/utils/supabase/client";
 interface DocumentUploadButtonProps {
   textVisible?: boolean;
   hideIcon?: boolean;
+  className?: string;
 }
 
-const DocumentUploadButton = ({ textVisible, hideIcon }: DocumentUploadButtonProps) => {
+const DocumentUploadButton = ({ textVisible, hideIcon, className }: DocumentUploadButtonProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
   const { data: user } = useUserQuery();
@@ -124,7 +125,6 @@ const DocumentUploadButton = ({ textVisible, hideIcon }: DocumentUploadButtonPro
       mutate.mutate({
         id: data.id,
         name: filename,
-        userId: user.id,
         metadata: {
           variables: extractedVariables,
         },
@@ -162,9 +162,10 @@ const DocumentUploadButton = ({ textVisible, hideIcon }: DocumentUploadButtonPro
         onClick={handleButtonClick}
         type="button"
         disabled={isUploading}
+        className={className}
       >
         {!hideIcon && (isUploading ? <Spinner size={17} /> : <Icons.Add size={17} />)}
-        {textVisible && <span className={cn(hideIcon ? "" : "ml-2")}>{isUploading ? "Uploading..." : "Upload"}</span>}
+        {textVisible && <span className={cn(hideIcon ? "" : "")}>{isUploading ? "Uploading..." : "Upload Document"}</span>}
       </Button>
 
       <input
