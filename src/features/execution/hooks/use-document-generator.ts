@@ -80,7 +80,7 @@ export function useDocumentGenerator(options: UseDocumentGeneratorOptions = {}):
 
         const result: GenerationResult = {
           filename:
-            configs.length === 1 ? configs[0].filename : `documents_${new Date().toISOString().split("T")[0]}.zip`,
+            configs.length === 1 && configs[0].filename ? configs[0].filename : `documents_${new Date().toISOString().split("T")[0]}.zip`,
           downloadUrl: "#", // This would come from generateBatchDocuments response
           format: configs.length === 1 ? "single" : "zip",
           timestamp: new Date(),
