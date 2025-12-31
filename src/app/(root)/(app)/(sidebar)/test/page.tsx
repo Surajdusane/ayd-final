@@ -2,7 +2,7 @@ import React from "react";
 
 import { createClient } from "@/utils/supabase/server";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 const page = async () => {
   const supabse = await createClient();

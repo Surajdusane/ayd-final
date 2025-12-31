@@ -40,7 +40,7 @@ const DocumentUploadButton = ({ textVisible, hideIcon, className }: DocumentUplo
     const result = await mammoth.extractRawText({ arrayBuffer });
     const fullText = result.value;
 
-    const variableRegex = /{{\s*(\w+)\s*}}/g;
+    const variableRegex = /\{\s*(\w+)\s*\}/g;
     const tagRegex = /{%\s*(?:if|for)\s+(\w+)/g;
 
     const variablesSet = new Set<string>();
@@ -165,7 +165,9 @@ const DocumentUploadButton = ({ textVisible, hideIcon, className }: DocumentUplo
         className={className}
       >
         {!hideIcon && (isUploading ? <Spinner size={17} /> : <Icons.Add size={17} />)}
-        {textVisible && <span className={cn(hideIcon ? "" : "")}>{isUploading ? "Uploading..." : "Upload Document"}</span>}
+        {textVisible && (
+          <span className={cn(hideIcon ? "" : "")}>{isUploading ? "Uploading..." : "Upload Document"}</span>
+        )}
       </Button>
 
       <input

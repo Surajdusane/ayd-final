@@ -1,17 +1,13 @@
 "use client";
 
+import { memo, ReactNode, useCallback } from "react";
 import { useReactFlow } from "@xyflow/react";
-import { ReactNode, useCallback, memo } from "react";
-import { useWorkflowValidationStore } from "../../store/workflow-validation-store";
+
 import { cn } from "@/lib/utils";
 
-const NodeCardComponent = ({
-  nodeId,
-  children,
-}: {
-  nodeId: string;
-  children: ReactNode;
-}) => {
+import { useWorkflowValidationStore } from "../../store/workflow-validation-store";
+
+const NodeCardComponent = ({ nodeId, children }: { nodeId: string; children: ReactNode }) => {
   const { getNode, setCenter } = useReactFlow();
 
   const handleDoubleClick = useCallback(() => {
@@ -29,14 +25,15 @@ const NodeCardComponent = ({
     });
   }, [nodeId, getNode, setCenter]);
 
-  const hasError = useWorkflowValidationStore(
-    useCallback((state) => state.invalidNodeIds.includes(nodeId), [nodeId])
-  );
+  const hasError = useWorkflowValidationStore(useCallback((state) => state.invalidNodeIds.includes(nodeId), [nodeId]));
 
   return (
     <div
       id="base-node"
-      className={cn("rounded-none px-2 py-4 cursor-pointer bg-background border-2 border-separate w-[420px] text-xs flex flex-col gap-y-4 overflow-visible transition-all duration-300", hasError && "border-destructive")}
+      className={cn(
+        "bg-background flex w-[420px] border-separate cursor-pointer flex-col gap-y-4 overflow-visible rounded-none border-2 px-2 py-4 text-xs transition-all duration-300",
+        hasError && "border-destructive"
+      )}
       onDoubleClick={handleDoubleClick}
     >
       {children}

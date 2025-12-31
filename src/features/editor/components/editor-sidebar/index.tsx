@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useReactFlow } from "@xyflow/react";
 
@@ -17,10 +18,18 @@ import {
   Plus,
   TextCursorInput,
   Type,
-  X
+  X,
 } from "lucide-react";
 
-import { Sidebar, SidebarContent, SidebarGroup, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import DocumentUploadButton from "@/features/document/components/document-upload-button";
 import { useTRPC } from "@/trpc/client";
 
 import { AppNode } from "../../types/appNode";
@@ -32,8 +41,6 @@ import { getNewNodePosition } from "../../utils/get-new-node-position";
 import { NavDocumentInput } from "./nav-document-input";
 import { NavFormInput } from "./nav-form-input";
 import { NavOpeation } from "./nav-opeation";
-import DocumentUploadButton from "@/features/document/components/document-upload-button";
-import { useEffect } from "react";
 
 // Centralized icon map
 const Icons: Record<string, LucideIcon> = {
@@ -149,7 +156,7 @@ export function EditorSidebar() {
     return <div>Loading...</div>;
   }
 
-  useEffect(()=> console.log("component render"), [])
+  useEffect(() => console.log("component render"), []);
 
   const dynamicDocuments = documents.map((document) => {
     const metadata = typeof document.metadata === "string" ? JSON.parse(document.metadata) : document.metadata;
@@ -218,14 +225,14 @@ export function EditorSidebar() {
           onClick={(id: string) => documentNodeOnClick(id)}
         />
         <SidebarGroup>
-        <SidebarMenu>
-          <SidebarMenuItem >
-            <SidebarMenuButton asChild>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
                 <DocumentUploadButton textVisible={true} />
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
           </SidebarMenu>
-          </SidebarGroup>
+        </SidebarGroup>
       </SidebarContent>
     </Sidebar>
   );

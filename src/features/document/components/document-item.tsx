@@ -14,7 +14,7 @@ const DocumentItem = ({ document }: { document: DocumentOutput }) => {
   const variables = metadata?.variables ?? [];
 
   return (
-    <Card className="hover:bg-muted/10 group relative max-w-sm transition-all duration-300">
+    <Card className="hover:bg-muted/10 group relative max-w-xs transition-all duration-300">
       <div className="absolute top-4 right-4 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
         <DocumentItemActions document={document} />
       </div>

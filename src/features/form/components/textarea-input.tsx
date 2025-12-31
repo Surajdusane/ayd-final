@@ -1,8 +1,10 @@
 "use client";
 
 import React from "react";
+
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
+
 import { FormFieldType } from "../../editor/types/input-types";
 
 type TextareaFormInputProps = {
@@ -11,22 +13,9 @@ type TextareaFormInputProps = {
 };
 
 const TextareaFormInput = ({ data, onChange }: TextareaFormInputProps) => {
-  const {
-    label,
-    description,
-    value,
-    name,
-    placeholder,
-    disabled,
-    required,
-    min,
-    max,
-    handleId,
-  } = data;
+  const { label, description, value, name, placeholder, disabled, required, min, max, handleId } = data;
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     onChange(handleId, e.target.value);
   };
 

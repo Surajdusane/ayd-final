@@ -1,52 +1,81 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { FormFieldType } from "@/features/editor/types/input-types";
-import DynamicFormFields from "./dynamic-form"; 
+import React, { useEffect, useState } from "react";
+
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { AppNode } from "@/features/editor/types/appNode";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useWorkflow } from "@/features/editor/hooks/use-workflow";
+import { AppNode } from "@/features/editor/types/appNode";
+import { FormFieldType } from "@/features/editor/types/input-types";
+
+import DynamicFormFields from "./dynamic-form";
+import { executionPlan, reactflowData } from "@/features/editor/types/workflow";
+import { generateFinalOutput } from "@/features/execution/utils/final-execution";
+import { useDocumentGenerator } from "@/features/execution/hooks/use-document-generator";
+import { useGetDocumentsLink } from "@/features/execution/hooks/use-get-documents-link";
+import { toast } from "sonner";
 
 type ExportFormat = "PDF" | "WORD";
 
 type DynamicFormPreviewClientProps = {
   initialFields: FormFieldType[];
+  workflowData: reactflowData;
+  workflowPlan: executionPlan;
 };
 
-const DynamicFormPreviewClient: React.FC<DynamicFormPreviewClientProps> = ({
-  initialFields,
-}) => {
+const DynamicFormPreviewClient: React.FC<DynamicFormPreviewClientProps> = ({ initialFields, workflowData, workflowPlan }) => {
   const [fields, setFields] = useState<FormFieldType[]>(initialFields);
   const [exportFormat, setExportFormat] = useState<ExportFormat>("PDF");
-  
-  const handleFieldChange = (
-    handleId: string,
-    value: string | number | boolean | Date | string[]
-  ) => {
-    setFields((prev) =>
-      prev.map((field) =>
-        field.handleId === handleId ? { ...field, value } : field
-      )
-    );
+  const {
+    isLoading,
+    progress,
+    progressPercentage,
+    lastResult,
+    generateSingleDocument,
+    generateFromExecutionData,
+    reset,
+  } = useDocumentGenerator({
+    onSuccess: (result) => {
+      console.log("Document generated successfully:", result);
+      // You could trigger a download or show a success message here
+    },
+    onError: (error) => {
+      console.error("Document generation error:", error);
+      toast.error(error.message);
+    },
+    onProgress: (progress) => {
+      console.log("Generation progress:", progress);
+    },
+  });
+  const { getDocumentLink } = useGetDocumentsLink();
+
+  const handleFieldChange = (handleId: string, value: string | number | boolean | Date | string[]) => {
+    setFields((prev) => prev.map((field) => (field.handleId === handleId ? { ...field, value } : field)));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const finaldata = fields.map((field) => {
       return { handleId: field.handleId, value: field.value };
     });
-    
-    // Here you can send data to API, etc.
-    console.log("Final Value:", finaldata);
+    // console.log("edge", workflowData.edges);
+    // console.log("finaldata", finaldata);
+    // console.log("workflowPlan", workflowPlan);
 
+    const executionData = generateFinalOutput(workflowData.edges, finaldata, workflowPlan);
+
+    console.log("Final exection plan:", executionData);
+
+    const documentLink = await getDocumentLink(executionData?.documentId);
+
+    const documentConfig = {
+      template: documentLink as string,
+      data: executionData?.values as Record<string, string | number | boolean>,
+      filename: "document.docx",
+    }
+    
+    await generateSingleDocument(documentConfig);
   };
 
   return (
@@ -55,10 +84,7 @@ const DynamicFormPreviewClient: React.FC<DynamicFormPreviewClientProps> = ({
 
       <div className="space-y-2">
         <label className="text-sm font-medium">Export format</label>
-        <Select
-          value={exportFormat}
-          onValueChange={(val: ExportFormat) => setExportFormat(val)}
-        >
+        <Select value={exportFormat} onValueChange={(val: ExportFormat) => setExportFormat(val)}>
           <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="Select format" />
           </SelectTrigger>
@@ -69,7 +95,9 @@ const DynamicFormPreviewClient: React.FC<DynamicFormPreviewClientProps> = ({
         </Select>
       </div>
 
-      <Button type="submit">Generate</Button>
+      <Button type="submit" disabled={isLoading}>
+        {isLoading ? "Generating..." : "Generate"}
+      </Button>
     </form>
   );
 };

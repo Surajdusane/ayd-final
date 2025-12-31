@@ -1,9 +1,42 @@
-import { Button } from '@/components/ui/button'
-import React from 'react'
+import React from "react";
+import { useAtomValue } from "jotai";
+
+import { Loader2 } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+
+import { useSaveWorkflow } from "../../hooks/use-save-workflow";
+import { editorAtom } from "../../store/atoms";
 
 export const SaveButton = ({ workflowId }: { workflowId: string }) => {
-    // console.log(workflowId)
+  const editor = useAtomValue(editorAtom);
+  const saveWorkflow = useSaveWorkflow({ id: workflowId });
+
+  const handleSave = () => {
+    if (!editor) return;
+    const nodes = editor.getNodes();
+    const edges = editor.getEdges();
+    const flowData = {
+      nodes,
+      edges,
+    };
+
+    saveWorkflow.mutate({
+      workflowId,
+      flowData,
+    });
+  };
+
   return (
-    <Button size={"sm"} variant={"outline"}>Save</Button>
-  )
-}
+    <Button size={"sm"} variant={"outline"} onClick={handleSave} disabled={saveWorkflow.isPending}>
+      {saveWorkflow.isPending ? (
+        <>
+          <Loader2 className={"size-4 mr-1 animate-spin"} />
+          Saving
+        </>
+      ) : (
+        "Save"
+      )}
+    </Button>
+  );
+};

@@ -1,19 +1,3 @@
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "@/components/ui/dialog";
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemMedia,
-  ItemTitle,
-} from "@/components/ui/item";
 import {
   ALargeSmall,
   AlignLeft,
@@ -29,8 +13,13 @@ import {
   Plus,
   TextCursorInput,
   Type,
-  X
+  X,
 } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item";
+
 import { InputType } from "../../types/input-types";
 import { TaskType } from "../../types/task";
 
@@ -137,49 +126,41 @@ export function AddNodeButton() {
         <Button variant="outline">Add node</Button>
       </DialogTrigger>
       <DialogContent className="min-h-[90%] min-w-[70%]">
-        <DialogTitle/>
+        <DialogTitle />
         <div className="flex items-start gap-x-4">
-          <div className="h-full min-w-1/4 flex flex-col gap-y-2">
-            <h3 className="text-xl font-semibold mb-3">
-              Form Elements
-            </h3>
-            {
-              sidebarFormElements.map((elementitem, index) => (
-                <Item key={index} variant="outline" size="sm" className="group border" >
-              <ItemMedia>
-                <elementitem.icon className="size-4"/>
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>{elementitem.name}</ItemTitle>
-                {/* <ItemDescription>{elementitem.description}</ItemDescription> */}
-              </ItemContent>
-              <ItemActions className="hidden group-hover:block">
-                <Plus className="size-4" />
-              </ItemActions>
-            </Item>
-              ))
-            }
+          <div className="flex h-full min-w-1/4 flex-col gap-y-2">
+            <h3 className="mb-3 text-xl font-semibold">Form Elements</h3>
+            {sidebarFormElements.map((elementitem, index) => (
+              <Item key={index} variant="outline" size="sm" className="group border">
+                <ItemMedia>
+                  <elementitem.icon className="size-4" />
+                </ItemMedia>
+                <ItemContent>
+                  <ItemTitle>{elementitem.name}</ItemTitle>
+                  {/* <ItemDescription>{elementitem.description}</ItemDescription> */}
+                </ItemContent>
+                <ItemActions className="hidden group-hover:block">
+                  <Plus className="size-4" />
+                </ItemActions>
+              </Item>
+            ))}
           </div>
-          <div className="h-full min-w-1/4 flex flex-col gap-y-2">
-            <h3 className="text-xl font-semibold mb-3">
-              Opeation Nodes
-            </h3>
-            {
-              sidebarMathOperationsElements.map((elementitem, index) => (
-                <Item key={index} variant="outline" size="sm" className="group border" >
-              <ItemMedia>
-                <elementitem.icon className="size-4"/>
-              </ItemMedia>
-              <ItemContent>
-                <ItemTitle>{elementitem.name}</ItemTitle>
-                {/* <ItemDescription>{elementitem.description}</ItemDescription> */}
-              </ItemContent>
-              <ItemActions className="hidden group-hover:block">
-                <Plus className="size-4" />
-              </ItemActions>
-            </Item>
-              ))
-            }
+          <div className="flex h-full min-w-1/4 flex-col gap-y-2">
+            <h3 className="mb-3 text-xl font-semibold">Opeation Nodes</h3>
+            {sidebarMathOperationsElements.map((elementitem, index) => (
+              <Item key={index} variant="outline" size="sm" className="group border">
+                <ItemMedia>
+                  <elementitem.icon className="size-4" />
+                </ItemMedia>
+                <ItemContent>
+                  <ItemTitle>{elementitem.name}</ItemTitle>
+                  {/* <ItemDescription>{elementitem.description}</ItemDescription> */}
+                </ItemContent>
+                <ItemActions className="hidden group-hover:block">
+                  <Plus className="size-4" />
+                </ItemActions>
+              </Item>
+            ))}
           </div>
         </div>
       </DialogContent>

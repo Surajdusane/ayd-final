@@ -1,24 +1,19 @@
 "use client";
 
+import { useReactFlow } from "@xyflow/react";
+
+import { CopyIcon, GripVerticalIcon, TrashIcon } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CreateFlowNode } from "../../utils/create-flow-node";
+import { useConfirm } from "@/hooks/use-confirm";
+
 import { tasks } from "../../task";
 import { AppNode } from "../../types/appNode";
 import { TaskType } from "../../types/task";
-import { useReactFlow } from "@xyflow/react";
-import { CopyIcon, GripVerticalIcon, TrashIcon } from "lucide-react";
-import { useConfirm } from "@/hooks/use-confirm";
+import { CreateFlowNode } from "../../utils/create-flow-node";
 
-export const NodeHeader = ({
-  taskType,
-  nodeId,
-  title
-}: {
-  taskType: TaskType;
-  nodeId: string;
-  title?: string;
-}) => {
+export const NodeHeader = ({ taskType, nodeId, title }: { taskType: TaskType; nodeId: string; title?: string }) => {
   const task = tasks[taskType];
   const { deleteElements, getNode, addNodes } = useReactFlow();
   const [ConfirmationDialog, confirm] = useConfirm(
@@ -28,14 +23,12 @@ export const NodeHeader = ({
   return (
     <div className="flex items-center gap-2 p-1">
       <ConfirmationDialog />
-      <div className="bg-muted p-2 rounded-xl">
+      <div className="bg-muted rounded-xl p-2">
         <task.icon size={20} className="text-" />
       </div>
-      <div className="flex justify-between items-center w-full">
-        <p className="text-xs font-bold uppercase text-muted-foreground">
-          {title ?? task.label}
-        </p>
-        <div className="flex gap-1 items-center">
+      <div className="flex w-full items-center justify-between">
+        <p className="text-muted-foreground text-xs font-bold uppercase">{title ?? task.label}</p>
+        <div className="flex items-center gap-1">
           {task.entryPoint && (
             <Badge variant={"secondary"} className="rounded-none">
               Entry Point
@@ -54,7 +47,7 @@ export const NodeHeader = ({
               }
             }}
           >
-            <TrashIcon size={16}/>
+            <TrashIcon size={16} />
           </Button>
           <Button
             variant="ghost"
@@ -63,9 +56,7 @@ export const NodeHeader = ({
             onClick={() => {
               const node = getNode(nodeId) as AppNode;
               const newX = node.position.x;
-              const calvalue = node.measured?.height
-                ? node.measured?.height
-                : 100;
+              const calvalue = node.measured?.height ? node.measured?.height : 100;
               const newY = node.position.y + calvalue + 20;
               const newNode = CreateFlowNode(node.data.type, {
                 x: newX,
@@ -74,14 +65,10 @@ export const NodeHeader = ({
               addNodes([newNode]);
             }}
           >
-            <CopyIcon size={16}/>
+            <CopyIcon size={16} />
           </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="drag-handle cursor-grab"
-          >
-            <GripVerticalIcon size={16}/>
+          <Button variant="ghost" size="icon" className="drag-handle cursor-grab">
+            <GripVerticalIcon size={16} />
           </Button>
         </div>
       </div>

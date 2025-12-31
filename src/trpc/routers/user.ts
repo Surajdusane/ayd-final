@@ -12,7 +12,7 @@ type UserType = {
   fullName: string | null;
   created_at: Date;
   updated_at: Date;
-}
+};
 
 export const userRouter = createTRPCRouter({
   me: authorizedProcedure.query(async ({ ctx: { db, session } }) => {

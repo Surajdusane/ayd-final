@@ -1,18 +1,19 @@
-import { useReactFlow } from "@xyflow/react";
 import { useCallback } from "react";
-import { createExecutionPlan } from "../utils/execution-plan";
+import { useReactFlow } from "@xyflow/react";
+
 import { AppNode } from "../types/appNode";
+import { createExecutionPlan } from "../utils/execution-plan";
 
 const useTestExecutionPlan = () => {
   const { toObject } = useReactFlow();
-  
+
   const generateExecutionPlan = useCallback(() => {
     const { nodes, edges } = toObject();
     const executionPlan = createExecutionPlan(nodes as AppNode[], edges);
     return executionPlan;
-  }, [toObject])
+  }, [toObject]);
 
-  return generateExecutionPlan
+  return generateExecutionPlan;
 };
 
 export default useTestExecutionPlan;

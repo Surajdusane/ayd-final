@@ -1,12 +1,6 @@
 import { AppNode } from "../types/appNode";
 
-export function safeUpdateNodeInput(
-  nodeId: string,
-  newInput: any,
-  getNode: any,
-  updateNodeData: any,
-  setNodes: any
-) {
+export function safeUpdateNodeInput(nodeId: string, newInput: any, getNode: any, updateNodeData: any, setNodes: any) {
   const node = getNode(nodeId) as AppNode;
   if (!node) return;
 
@@ -17,8 +11,6 @@ export function safeUpdateNodeInput(
 
   // ✅ Force immediate React re-render of that node
   setNodes((nds: AppNode[]) =>
-    nds.map((n) =>
-      n.id === nodeId ? { ...n, data: { ...n.data, dynamicInputs: updatedInputs } } : n
-    )
+    nds.map((n) => (n.id === nodeId ? { ...n, data: { ...n.data, dynamicInputs: updatedInputs } } : n))
   );
 }

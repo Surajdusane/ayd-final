@@ -5,6 +5,11 @@ import {
   updateWorkflowData,
   updateWorkflowPlan,
 } from "@/db/queries/workflowdata";
+import { TaskType } from "@/features/editor/types/task"; 
+import { CreateFlowNode } from "@/features/editor/utils/create-flow-node"; 
+import { AppNode } from "@/features/editor/types/appNode";
+import { Edge } from "@xyflow/react";
+
 import { createTRPCRouter } from "../init";
 import { authorizedProcedure } from "../procedures/authorizedProcedure";
 import {
@@ -14,6 +19,14 @@ import {
   updateWorkflowDataSchema,
   updateWorkflowPlanSchema,
 } from "../schemas/workflowdata";
+import z from "zod";
+import { and, eq } from "drizzle-orm";
+import { workflowData } from "@/db/schema";
+
+export interface FlowData {
+  nodes: AppNode[];
+  edges: Edge[];
+}
 
 export const workflowDataRouter = createTRPCRouter({
   create: authorizedProcedure
@@ -82,16 +95,39 @@ export const workflowDataRouter = createTRPCRouter({
     .input(getWorkflowDataByWorkflowIdSchema)
     .query(async ({ ctx: { db, userId }, input }) => {
       try {
-        // ✅ This now properly returns null if not found
+        // Try to fetch existing workflow data
         const result = await getWorkflowDataByWorkflowId(db, {
           workflowId: input.workflowId,
           userId: userId,
         });
-        return result; // Can be null, which is fine
+
+        // If data exists, return it with typed flowData
+        if (result) {
+          return {
+            ...result,
+            flowData: result.flowData as FlowData,
+          };
+        }
+
+        // If no data exists, create initial workflow
+        const initialFlowData: FlowData = {
+          nodes: [CreateFlowNode(TaskType.FORM_INPUTS)],
+          edges: [],
+        };
+
+        const newResult = await createWorkflowData(db, {
+          userId: userId,
+          workFlowId: input.workflowId,
+          flowData: initialFlowData,
+        });
+
+        return {
+          ...newResult,
+          flowData: newResult.flowData as FlowData,
+        };
       } catch (error) {
-        console.error("Error fetching workflow data:", error);
-        // Return null instead of throwing on error
-        return null;
+        console.error("Error fetching/creating workflow data:", error);
+        throw error;
       }
     }),
 });

@@ -1,18 +1,9 @@
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemMedia,
-  ItemTitle,
-} from "@/components/ui/item";
 import { Clipboard, Plus } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Item, ItemActions, ItemContent, ItemMedia, ItemTitle } from "@/components/ui/item";
+
 import { TaskType } from "../../types/task";
 
 const sidebarDocumentElements = [
@@ -42,32 +33,26 @@ const sidebarDocumentElements = [
   },
 ];
 
-export function AddDocumentNodeButton({onclick} : {onclick : () => void}) {
+export function AddDocumentNodeButton({ onclick }: { onclick: () => void }) {
   return (
     <Dialog>
       <DialogTrigger asChild className="">
         <Button variant="outline">Add Document Node</Button>
       </DialogTrigger>
       <DialogContent className="min-h-[90%] min-w-[70%] transition-all duration-300">
-        <DialogTitle className="absolute hidden"/>
+        <DialogTitle className="absolute hidden" />
         <div className="flex items-start gap-x-4">
-          <div className="h-full min-w-1/4 flex flex-col gap-y-2">
-            <h3 className="text-xl font-semibold mb-3">Available Documents</h3>
+          <div className="flex h-full min-w-1/4 flex-col gap-y-2">
+            <h3 className="mb-3 text-xl font-semibold">Available Documents</h3>
             {sidebarDocumentElements.map((elementitem, index) => (
-              <Item
-                key={index}
-                variant="outline"
-                size="sm"
-                className="group border"
-                onClick={onclick}
-              >
+              <Item key={index} variant="outline" size="sm" className="group border" onClick={onclick}>
                 <ItemMedia>
                   <elementitem.icon className="size-4" />
                 </ItemMedia>
                 <ItemContent>
                   <ItemTitle>{elementitem.name}</ItemTitle>
                 </ItemContent>
-                <ItemActions className="hidden group-hover:block ">
+                <ItemActions className="hidden group-hover:block">
                   <Plus className="size-4" />
                 </ItemActions>
               </Item>

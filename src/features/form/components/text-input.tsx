@@ -1,13 +1,11 @@
 "use client";
 
 import React from "react";
+
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 
-import {
-  FormFieldType,
-  InputValidationType,
-} from "../../editor/types/input-types";
+import { FormFieldType, InputValidationType } from "../../editor/types/input-types";
 
 type TextFormInputProps = {
   data: FormFieldType;

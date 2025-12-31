@@ -1,13 +1,10 @@
 import { tasks } from "../task";
 import { AppNode } from "../types/appNode";
-import { TaskType, ParentTaskType } from "../types/task";
+import { ParentTaskType, TaskType } from "../types/task";
 
-export function getNewNodePosition(
-  nodes: AppNode[],
-  newNodeType: TaskType
-): { x: number; y: number } {
+export function getNewNodePosition(nodes: AppNode[], newNodeType: TaskType): { x: number; y: number } {
   const X_GAP = 100;
-  const Y_GAP = 30
+  const Y_GAP = 30;
   const DEFAULT_WIDTH = 420;
   const DEFAULT_HEIGHT = 100;
 
@@ -21,9 +18,7 @@ export function getNewNodePosition(
   // === CASE 1: No parent node type (this creates a new parent node type) ===
   if (!parentNodeType) {
     // Find rightmost node and place to its right
-    const maxXNode = nodes.reduce((maxNode, node) =>
-      node.position.x > maxNode.position.x ? node : maxNode
-    );
+    const maxXNode = nodes.reduce((maxNode, node) => (node.position.x > maxNode.position.x ? node : maxNode));
     const nodeWidth = maxXNode.measured?.width ?? DEFAULT_WIDTH;
     return {
       x: maxXNode.position.x + nodeWidth + X_GAP,
@@ -33,14 +28,10 @@ export function getNewNodePosition(
 
   // === CASE 2: Parent node type exists (adding child to parent) ===
   // Find the actual parent node - parent nodes have type === parentTaskType
-  const parentNode = nodes.find(
-    (n) => (n.type as unknown as ParentTaskType) === parentNodeType
-  );
+  const parentNode = nodes.find((n) => (n.type as unknown as ParentTaskType) === parentNodeType);
 
   // Find all children with same parent type (children also have parentTaskType in data)
-  const childrenOfParent = nodes.filter(
-    (n) => n.data?.parentTaskType === parentNodeType 
-  );
+  const childrenOfParent = nodes.filter((n) => n.data?.parentTaskType === parentNodeType);
 
   // If parent node exists
   if (parentNode) {
@@ -67,9 +58,7 @@ export function getNewNodePosition(
 
   // Parent doesn't exist yet - place in new column to the right, aligned with FORM_NODE Y
   const formNode = nodes.find((n) => (n.data?.type as string) === "FORM_INPUTS");
-  const maxXNode = nodes.reduce((maxNode, node) =>
-    node.position.x > maxNode.position.x ? node : maxNode
-  );
+  const maxXNode = nodes.reduce((maxNode, node) => (node.position.x > maxNode.position.x ? node : maxNode));
   const maxNodeWidth = maxXNode.measured?.width ?? DEFAULT_WIDTH;
   return {
     x: maxXNode.position.x + maxNodeWidth + X_GAP,

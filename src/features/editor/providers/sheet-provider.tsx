@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useMountedState } from 'react-use';
-import { EditFormSheet } from '../components/custom-nodes/form-node/edit-form-sheet';
+import { useMountedState } from "react-use";
 
+import { EditFormSheet } from "../components/custom-nodes/form-node/edit-form-sheet";
 
 const SheetProvider = () => {
   const isMounted = useMountedState();
@@ -10,7 +10,7 @@ const SheetProvider = () => {
 
   return (
     <>
-        <EditFormSheet />
+      <EditFormSheet />
     </>
   );
 };

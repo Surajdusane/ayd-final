@@ -1,22 +1,5 @@
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
-import { cn } from "@/lib/utils";
-
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { useReactFlow } from "@xyflow/react";
+
 import {
   ALargeSmall,
   AlignLeft,
@@ -35,6 +18,21 @@ import {
   Type,
   X,
 } from "lucide-react";
+
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+
 import { AppNode } from "../../types/appNode";
 import { InputType } from "../../types/input-types";
 import { TaskType } from "../../types/task";
@@ -119,7 +117,7 @@ const sidebarMathOperationsElements = [
     icon: Type,
     type: TaskType.NUMBER_TO_STRING_OPREATION,
     description: "Convert number to string",
-  }, 
+  },
   {
     name: "Letter Case",
     icon: ALargeSmall,
@@ -158,7 +156,7 @@ export function EditorSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {sidebarFormElements.map((item, index) => (
-                <SidebarMenuItem key={index} >
+                <SidebarMenuItem key={index}>
                   <SidebarCustomMenuButton
                     icon={item.icon}
                     title={item.name}
@@ -221,32 +219,27 @@ type SidebarCustomMenuButtonProps = {
 };
 
 // Reusable Custom Button Component
-export const SidebarCustomMenuButton = ({
-  icon: Icon,
-  title,
-  description,
-  onClick,
-}: SidebarCustomMenuButtonProps) => (
+export const SidebarCustomMenuButton = ({ icon: Icon, title, description, onClick }: SidebarCustomMenuButtonProps) => (
   <Tooltip>
     <TooltipTrigger className="w-full">
       <div
         onClick={onClick}
         className={cn(
-          "group cursor-pointer flex items-center justify-between transition-all duration-200 hover:bg-accent/40 rounded-md px-2 py-1"
+          "group hover:bg-accent/40 flex cursor-pointer items-center justify-between rounded-md px-2 py-1 transition-all duration-200"
         )}
       >
         {/* Left side: icon + text */}
         <div className="flex items-center gap-2">
           <Icon className="stroke-muted-foreground size-5 transition-transform duration-200" />
 
-          <div className="text-left space-y-2">
-            <h4 className="leading-none text-sm font-medium">{title}</h4>
+          <div className="space-y-2 text-left">
+            <h4 className="text-sm leading-none font-medium">{title}</h4>
           </div>
         </div>
 
         {/* Right side: Plus icon (only visible on hover) */}
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg p-1 shrink-0">
-          <Plus className="stroke-muted-foreground w-5 h-5" />
+        <div className="shrink-0 rounded-lg p-1 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+          <Plus className="stroke-muted-foreground h-5 w-5" />
         </div>
       </div>
     </TooltipTrigger>

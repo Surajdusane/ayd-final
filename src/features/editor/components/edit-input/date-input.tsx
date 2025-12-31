@@ -1,28 +1,15 @@
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
+
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { EditInputProps } from ".";
-import { InputValidationType } from "../../types/input-types";
-import { NodeStaticInputType } from "../../types/input-types";
-import { DateFormat } from "../../types/input-types";
+import { DateFormat, InputValidationType, NodeStaticInputType } from "../../types/input-types";
 
 const dateInputFormSchema = z.object({
   label: z.string().min(1),
@@ -34,12 +21,7 @@ const dateInputFormSchema = z.object({
   dateFormat: z.enum(DateFormat),
 });
 
-const DateInput = ({
-  defaultValues,
-  onSubmit,
-  onDelete,
-  disabled,
-}: EditInputProps) => {
+const DateInput = ({ defaultValues, onSubmit, onDelete, disabled }: EditInputProps) => {
   const form = useForm<z.infer<typeof dateInputFormSchema>>({
     resolver: zodResolver(dateInputFormSchema),
     defaultValues: {
@@ -109,7 +91,7 @@ const DateInput = ({
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="border-2 rounded-none size-5"
+                      className="size-5 rounded-none border-2"
                     />
                   </FormControl>
                   <FormLabel>Disabled</FormLabel>
@@ -128,7 +110,7 @@ const DateInput = ({
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="border-2 rounded-none size-5"
+                      className="size-5 rounded-none border-2"
                     />
                   </FormControl>
                   <FormLabel>Required</FormLabel>
@@ -146,11 +128,7 @@ const DateInput = ({
             <FormItem>
               <FormLabel>Date Format</FormLabel>
               <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select date format" />
                   </SelectTrigger>

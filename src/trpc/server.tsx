@@ -41,9 +41,7 @@ export function prefetch<T extends ReturnType<TRPCQueryOptions<any>>>(queryOptio
   }
 }
 
-export function batchPrefetch<T extends ReturnType<TRPCQueryOptions<any>>>(
-  queryOptionsArray: T[],
-) {
+export function batchPrefetch<T extends ReturnType<TRPCQueryOptions<any>>>(queryOptionsArray: T[]) {
   const queryClient = getQueryClient();
 
   for (const queryOptions of queryOptionsArray) {

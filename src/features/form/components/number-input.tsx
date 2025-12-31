@@ -1,8 +1,10 @@
 "use client";
 
 import React from "react";
+
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+
 import { FormFieldType } from "../../editor/types/input-types";
 
 type NumberFormInputProps = {
@@ -11,18 +13,7 @@ type NumberFormInputProps = {
 };
 
 const NumberFormInput = ({ data, onChange }: NumberFormInputProps) => {
-  const {
-    label,
-    description,
-    value,
-    name,
-    placeholder,
-    disabled,
-    required,
-    min,
-    max,
-    handleId,
-  } = data;
+  const { label, description, value, name, placeholder, disabled, required, min, max, handleId } = data;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value === "" ? 0 : Number(e.target.value);

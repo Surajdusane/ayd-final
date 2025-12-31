@@ -1,7 +1,10 @@
 "use client";
-import { AppNodeData } from "@/features/editor/types/appNode";
-import { NodeProps } from "@xyflow/react";
+
 import { memo, useEffect, useState } from "react";
+import { NodeProps } from "@xyflow/react";
+
+import { AppNodeData } from "@/features/editor/types/appNode";
+
 import { NodeCard } from "../node-card";
 import { NodeHeader } from "../node-header";
 import NodeInputs from "./node-inputs";
@@ -9,9 +12,7 @@ import NodeInputs from "./node-inputs";
 const FormNode = memo((props: NodeProps) => {
   const nodeData = props.data as AppNodeData;
 
-  const [internalList, setInternalList] = useState<Array<any>>(
-    nodeData.dynamicInputs || []
-  );
+  const [internalList, setInternalList] = useState<Array<any>>(nodeData.dynamicInputs || []);
   useEffect(() => {
     setInternalList(nodeData.dynamicInputs || []);
   }, [nodeData.dynamicInputs]);

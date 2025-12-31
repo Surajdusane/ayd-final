@@ -1,10 +1,4 @@
-import {
-  DateFormat,
-  FormFieldType,
-  InputType,
-  InputValidationType,
-  NodeStaticInputType,
-} from "../types/input-types";
+import { DateFormat, FormFieldType, InputType, InputValidationType, NodeStaticInputType } from "../types/input-types";
 
 const defaultInputs: Record<InputType, FormFieldType> = {
   TEXT: {
@@ -86,8 +80,6 @@ const defaultInputs: Record<InputType, FormFieldType> = {
   },
 };
 
-
-
 export function getDefaultInputs(inputType: InputType): FormFieldType {
   const baseInput = defaultInputs[inputType];
   if (!baseInput) {
@@ -99,4 +91,3 @@ export function getDefaultInputs(inputType: InputType): FormFieldType {
     handleId: crypto.randomUUID(), // generate fresh ID each time
   };
 }
-

@@ -1,27 +1,15 @@
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
+
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { EditInputProps } from ".";
-import { InputValidationType } from "../../types/input-types";
-import { NodeStaticInputType } from "../../types/input-types";
+import { InputValidationType, NodeStaticInputType } from "../../types/input-types";
 
 const selectInputFormSchema = z.object({
   label: z.string().min(1),
@@ -32,21 +20,13 @@ const selectInputFormSchema = z.object({
   selectValue: z
     .array(z.string())
     .refine((arr) => arr.length > 0, "At least one option is required")
-    .refine(
-      (arr) => arr.every((val) => val.trim().length > 0),
-      "Option values cannot be empty"
-    ),
+    .refine((arr) => arr.every((val) => val.trim().length > 0), "Option values cannot be empty"),
 
   required: z.boolean(),
   handleId: z.string(),
 });
 
-const SelectInput = ({
-  defaultValues,
-  onSubmit,
-  onDelete,
-  disabled,
-}: EditInputProps) => {
+const SelectInput = ({ defaultValues, onSubmit, onDelete, disabled }: EditInputProps) => {
   const form = useForm<z.infer<typeof selectInputFormSchema>>({
     resolver: zodResolver(selectInputFormSchema),
     defaultValues: {
@@ -63,10 +43,7 @@ const SelectInput = ({
 
   const handleAddOption = () => {
     const currentOptions = form.getValues("selectValue") || [];
-    form.setValue("selectValue", [
-      ...currentOptions,
-      `Option ${currentOptions.length + 1}`,
-    ]);
+    form.setValue("selectValue", [...currentOptions, `Option ${currentOptions.length + 1}`]);
   };
 
   const handleRemoveOption = (index: number) => {
@@ -138,7 +115,7 @@ const SelectInput = ({
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="border-2 rounded-none size-5"
+                      className="size-5 rounded-none border-2"
                     />
                   </FormControl>
                   <FormLabel>Disabled</FormLabel>
@@ -157,7 +134,7 @@ const SelectInput = ({
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="border-2 rounded-none size-5"
+                      className="size-5 rounded-none border-2"
                     />
                   </FormControl>
                   <FormLabel>Required</FormLabel>
@@ -175,11 +152,7 @@ const SelectInput = ({
             <FormItem>
               <FormLabel>Default Value</FormLabel>
               <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select default value" />
                   </SelectTrigger>
@@ -213,9 +186,7 @@ const SelectInput = ({
                     <div key={index} className="flex gap-2">
                       <Input
                         value={option}
-                        onChange={(e) =>
-                          handleOptionChange(index, e.target.value)
-                        }
+                        onChange={(e) => handleOptionChange(index, e.target.value)}
                         placeholder={`Option ${index + 1}`}
                       />
                       <Button
@@ -229,12 +200,7 @@ const SelectInput = ({
                       </Button>
                     </div>
                   ))}
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={handleAddOption}
-                    className="w-full"
-                  >
+                  <Button type="button" variant="outline" onClick={handleAddOption} className="w-full">
                     Add Option
                   </Button>
                 </div>

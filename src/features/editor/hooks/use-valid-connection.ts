@@ -1,10 +1,11 @@
-import { Connection, Edge, getOutgoers } from "@xyflow/react";
 import { useCallback, useMemo, useRef } from "react";
+import { Connection, Edge, getOutgoers } from "@xyflow/react";
 import { toast } from "sonner";
-import { AppNode } from "../types/appNode";
+
 import { tasks } from "../task";
-import { TaskType } from "../types/task";
+import { AppNode } from "../types/appNode";
 import { NodeStaticInputType } from "../types/input-types";
+import { TaskType } from "../types/task";
 
 export const useValidConnection = (nodes: AppNode[], edges: Edge[]) => {
   // Store latest nodes and edges in refs to prevent callback recreation on each render
@@ -58,14 +59,10 @@ export const useValidConnection = (nodes: AppNode[], edges: Edge[]) => {
 
       if (sourceNode.data.type === TaskType.FORM_INPUTS) {
         const outputNode = nodes.find((n) => n.id === "formId");
-        const getoutput = outputNode?.data?.dynamicInputs?.find(
-          (output: any) => output.handleId === sourceHandle
-        );
+        const getoutput = outputNode?.data?.dynamicInputs?.find((output: any) => output.handleId === sourceHandle);
         output = { type: getoutput?.outputType };
       } else {
-        output = sourceTask.outputs.find(
-          (output: any) => output.name === sourceHandle
-        );
+        output = sourceTask.outputs.find((output: any) => output.name === sourceHandle);
       }
 
       // 🧠 Get target input
@@ -75,9 +72,7 @@ export const useValidConnection = (nodes: AppNode[], edges: Edge[]) => {
           type: NodeStaticInputType.STRING,
         };
       } else {
-        input = targetTask.inputs.find(
-          (input: any) => input.name === targetHandle
-        );
+        input = targetTask.inputs.find((input: any) => input.name === targetHandle);
       }
 
       // const input = targetTask.inputs.find(
@@ -86,18 +81,15 @@ export const useValidConnection = (nodes: AppNode[], edges: Edge[]) => {
 
       // 🔥 Type mismatch check
       if (input?.type !== output?.type) {
-        toast.error(
-          `Source and Target Type Mismatch. Source type is ${output?.type}, Target type is ${input?.type}`,
-          { duration: 3000, id: "source-target-type-mismatch" }
-        );
+        toast.error(`Source and Target Type Mismatch. Source type is ${output?.type}, Target type is ${input?.type}`, {
+          duration: 3000,
+          id: "source-target-type-mismatch",
+        });
         return false;
       }
 
       // 🔁 Detect cycles efficiently
-      const hasCycle = (
-        node: AppNode,
-        visited = new Set<string>()
-      ): boolean => {
+      const hasCycle = (node: AppNode, visited = new Set<string>()): boolean => {
         if (visited.has(node.id)) return false;
         visited.add(node.id);
 

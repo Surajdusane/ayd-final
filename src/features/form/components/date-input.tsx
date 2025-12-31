@@ -1,12 +1,15 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
+import React, { useEffect, useRef, useState } from "react";
+
 import { CalendarIcon } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+
 import { DateFormat, FormFieldType } from "../../editor/types/input-types";
 
 // Utility: format a Date object into a given format
@@ -30,15 +33,7 @@ export const formatDate = (date: Date, formatType: DateFormat): string => {
     "December",
   ];
   const monthNamesAbbr = monthNamesFull.map((m) => m.slice(0, 3));
-  const dayNames = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
+  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   switch (formatType) {
     case DateFormat.ISO:
@@ -70,13 +65,9 @@ export const formatDate = (date: Date, formatType: DateFormat): string => {
     case DateFormat.TEXT_US:
       return `${monthNamesFull[date.getMonth()]} ${day} ${year}`;
     case DateFormat.TEXT_DAY:
-      return `${dayNames[date.getDay()]}, ${day} ${
-        monthNamesFull[date.getMonth()]
-      } ${year}`;
+      return `${dayNames[date.getDay()]}, ${day} ${monthNamesFull[date.getMonth()]} ${year}`;
     case DateFormat.TEXT_US_DAY:
-      return `${dayNames[date.getDay()]}, ${
-        monthNamesFull[date.getMonth()]
-      } ${day}, ${year}`;
+      return `${dayNames[date.getDay()]}, ${monthNamesFull[date.getMonth()]} ${day}, ${year}`;
     default:
       return date.toISOString().split("T")[0];
   }
@@ -143,7 +134,7 @@ const DateFormInput = ({ data, onChange }: DateFormInputProps) => {
   // Only sync from prop if it's different from what we last sent
   useEffect(() => {
     const propValue = String(value || "");
-    
+
     // If the prop value is different from what we sent, it's an external change
     if (propValue && propValue !== lastSentValueRef.current) {
       const parsedDate = parseDateValue(value);
@@ -172,9 +163,7 @@ const DateFormInput = ({ data, onChange }: DateFormInputProps) => {
 
   return (
     <Field>
-      <FieldLabel htmlFor={name}>
-        {label}
-      </FieldLabel>
+      <FieldLabel htmlFor={name}>{label}</FieldLabel>
 
       {description && <FieldDescription>{description}</FieldDescription>}
 
@@ -183,10 +172,7 @@ const DateFormInput = ({ data, onChange }: DateFormInputProps) => {
           <Button
             id={name}
             variant="outline"
-            className={cn(
-              "w-full justify-start text-left font-normal",
-              !selectedDate && "text-muted-foreground"
-            )}
+            className={cn("w-full justify-start text-left font-normal", !selectedDate && "text-muted-foreground")}
             disabled={disabled}
             type="button"
           >
@@ -207,7 +193,7 @@ const DateFormInput = ({ data, onChange }: DateFormInputProps) => {
         </PopoverContent>
       </Popover>
 
-      <p className="text-xs text-muted-foreground mt-1">Format: {dateFormat}</p>
+      <p className="text-muted-foreground mt-1 text-xs">Format: {dateFormat}</p>
     </Field>
   );
 };

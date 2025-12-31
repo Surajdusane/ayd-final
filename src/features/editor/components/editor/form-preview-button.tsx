@@ -20,8 +20,8 @@ import { FormFieldType } from "../../types/input-types";
 const FormPreviewButton = ({ workflowId }: { workflowId: string }) => {
   const { data: workflow } = useWorkflow(workflowId);
   if (!workflow) return null;
-  const formNode = workflow.nodes.find((node: AppNode) => node.type === "FORM_NODE");
-  const dynamicInputs = formNode?.data?.dynamicInputs as FormFieldType[];
+  const formNode = workflow.flowData.nodes.find((node: AppNode) => node.type === "FORM_NODE");
+  const dynamicInputs = formNode?.data?.dynamicInputs as FormFieldType[]; 
 
   return (
     <Dialog>
@@ -31,7 +31,7 @@ const FormPreviewButton = ({ workflowId }: { workflowId: string }) => {
             Preview
           </Button>
         </DialogTrigger>
-        <DialogContent className="w-full max-w-lg h-full max-h-[90vh] overflow-auto flex flex-col justify-start">
+        <DialogContent className="flex h-full max-h-[90vh] w-full max-w-lg flex-col justify-start overflow-auto">
           <DialogHeader>
             <DialogTitle></DialogTitle>
             <DialogDescription></DialogDescription>

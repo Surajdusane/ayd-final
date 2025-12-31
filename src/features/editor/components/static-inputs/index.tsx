@@ -1,11 +1,12 @@
 "use client";
 
-import { NodeStaticInput, NodeStaticInputType } from '../../types/input-types';
-import StringInput from './string-input'
-import { useReactFlow } from "@xyflow/react";
-import { AppNode } from '../../types/appNode'; 
 import { useCallback } from "react";
-import SelectInput from './select-input';
+import { useReactFlow } from "@xyflow/react";
+
+import { AppNode } from "../../types/appNode";
+import { NodeStaticInput, NodeStaticInputType } from "../../types/input-types";
+import SelectInput from "./select-input";
+import StringInput from "./string-input";
 
 export const StaticInput = ({
   input,
@@ -36,35 +37,20 @@ export const StaticInput = ({
     default:
       return (
         <div className="w-full">
-          <p className="text-xs text-muted-foreground font-medium">Not Implimented</p>
+          <p className="text-muted-foreground text-xs font-medium">Not Implimented</p>
         </div>
       );
     case NodeStaticInputType.STRING:
       return (
-        <StringInput
-          input={input}
-          value={value}
-          updateNodeParamValue={updateNodeParamValue}
-          disabled={disabled}
-        />
+        <StringInput input={input} value={value} updateNodeParamValue={updateNodeParamValue} disabled={disabled} />
       );
     case NodeStaticInputType.SELECT:
       return (
-        <SelectInput
-          input={input}
-          value={value}
-          updateNodeParamValue={updateNodeParamValue}
-          disabled={disabled}
-        />
+        <SelectInput input={input} value={value} updateNodeParamValue={updateNodeParamValue} disabled={disabled} />
       );
     case NodeStaticInputType.NUMBER:
       return (
-        <StringInput
-          input={input}
-          value={value}
-          updateNodeParamValue={updateNodeParamValue}
-          disabled={disabled}
-        />
+        <StringInput input={input} value={value} updateNodeParamValue={updateNodeParamValue} disabled={disabled} />
       );
   }
 };

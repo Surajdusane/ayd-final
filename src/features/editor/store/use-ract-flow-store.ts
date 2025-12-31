@@ -1,6 +1,5 @@
 "use client";
 
-import { create } from "zustand";
 import {
   addEdge,
   applyEdgeChanges,
@@ -11,6 +10,8 @@ import {
   NodeChange,
   ReactFlowInstance,
 } from "@xyflow/react";
+import { create } from "zustand";
+
 import { AppNode } from "../types/appNode";
 
 type FlowState = {
@@ -68,9 +69,7 @@ export const useFlowStore = create<FlowState>((set, get) => ({
 
   updateNodeData: (id, data) => {
     set({
-      nodes: get().nodes.map((node) =>
-        node.id === id ? { ...node, data: { ...node.data, ...data } } : node
-      ),
+      nodes: get().nodes.map((node) => (node.id === id ? { ...node, data: { ...node.data, ...data } } : node)),
     });
   },
 }));

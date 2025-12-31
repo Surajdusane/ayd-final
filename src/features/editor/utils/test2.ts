@@ -1,13 +1,14 @@
-import { AppNode } from "../types/appNode";
 import { Edge } from "@xyflow/react";
 
-type ExecutionContext = Record<string, Record<string, any>>; 
+import data from "../../../../data.json" with { type: "json" };
+import { AppNode } from "../types/appNode";
+import { WorkflowExecutionPlan } from "../types/workflow";
+import { createExecutionPlan } from "./execution-plan";
+
+type ExecutionContext = Record<string, Record<string, any>>;
 // context[nodeId][outputHandle] = value
 
-type OperationRunner = (args: {
-  node: AppNode;
-  getInput: (inputName: string) => any;
-}) => Record<string, any>; // outputHandle -> value
+type OperationRunner = (args: { node: AppNode; getInput: (inputName: string) => any }) => Record<string, any>; // outputHandle -> value
 
 const operationRunners: Record<string, OperationRunner> = {
   ADDITION_OPREATION: ({ getInput }) => {
@@ -36,7 +37,6 @@ const operationRunners: Record<string, OperationRunner> = {
   // ...other ops (subtraction, percentage, etc)
 };
 
-
 function getIncomingEdges(nodeId: string, edges: Edge[]) {
   return edges.filter((e) => e.target === nodeId);
 }
@@ -56,9 +56,6 @@ function resolveInputFromEdges(
 
   return sourceOutputs[edge.sourceHandle!];
 }
-
-
-import { WorkflowExecutionPlan } from "../types/workflpw";
 
 type RunWorkflowResult = {
   context: ExecutionContext;
@@ -127,9 +124,7 @@ export function runWorkflow(
 
         for (const input of dynInputs) {
           // here targetHandle in edge is handleId, so we resolve by handleId
-          const value =
-            resolveInputFromEdges(node, input.handleId, edges, context) ??
-            node.data.inputs?.[input.name]; // fallback to literal if any
+          const value = resolveInputFromEdges(node, input.handleId, edges, context) ?? node.data.inputs?.[input.name]; // fallback to literal if any
           docInputValues[input.name] = value;
         }
 
@@ -152,18 +147,14 @@ export function runWorkflow(
   return { context, documents };
 }
 
-
-import data from "../../../../data.json" with { type: "json" };
-import { createExecutionPlan } from "./execution-plan";
-
 const nodes = data.nodes as AppNode[];
 const edges = data.edges as Edge[];
 const executionPlan = createExecutionPlan(nodes, edges);
 const formValues = {
-  "598b18ef-8a36-42d4-aa73-0549ba25f9c4": "John Doe",          // text
+  "598b18ef-8a36-42d4-aa73-0549ba25f9c4": "John Doe", // text
   "d40daa84-9037-40fb-81ca-18124dac36e6": "Software Engineer", // textarea
-  "df990309-8e37-4cfe-b3bd-1d600ae74ef7": 50000,               // number
-  "bbd03b53-868d-4fb7-87ff-839d88116013": 5,                   // number 2 (if needed)
+  "df990309-8e37-4cfe-b3bd-1d600ae74ef7": 50000, // number
+  "bbd03b53-868d-4fb7-87ff-839d88116013": 5, // number 2 (if needed)
 };
 
 console.log(JSON.stringify(executionPlan, null, 2));

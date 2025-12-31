@@ -1,17 +1,12 @@
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
+
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
 import { EditInputProps } from ".";
 
 const textAreaInputFormSchema = z.object({
@@ -26,12 +21,7 @@ const textAreaInputFormSchema = z.object({
   handleId: z.string(),
 });
 
-const TextAreaInput = ({
-  defaultValues,
-  onSubmit,
-  onDelete,
-  disabled,
-}: EditInputProps) => {
+const TextAreaInput = ({ defaultValues, onSubmit, onDelete, disabled }: EditInputProps) => {
   const form = useForm<z.infer<typeof textAreaInputFormSchema>>({
     resolver: zodResolver(textAreaInputFormSchema),
     defaultValues: {
@@ -99,7 +89,7 @@ const TextAreaInput = ({
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="border-2 rounded-none size-5"
+                      className="size-5 rounded-none border-2"
                     />
                   </FormControl>
                   <FormLabel>Disabled</FormLabel>
@@ -118,7 +108,7 @@ const TextAreaInput = ({
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="border-2 rounded-none size-5"
+                      className="size-5 rounded-none border-2"
                     />
                   </FormControl>
                   <FormLabel>Required</FormLabel>
@@ -149,7 +139,7 @@ const TextAreaInput = ({
             <FormItem>
               <FormLabel>Min</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} type="number"/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -162,7 +152,7 @@ const TextAreaInput = ({
             <FormItem>
               <FormLabel>Max</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} type="number"/>
               </FormControl>
               <FormMessage />
             </FormItem>

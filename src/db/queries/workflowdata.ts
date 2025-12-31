@@ -48,22 +48,17 @@ export const createWorkflowData = async (db: Database, data: CreateWorkflow) => 
 // ✅ FIXED: Return success indicator
 export const removeWorkflowData = async (db: Database, data: RemoveWorkflow) => {
   const { workflowId, userId } = data;
-  await db
-    .delete(workflowData)
-    .where(
-      and(
-        eq(workflowData.userId, userId),
-        eq(workflowData.workFlowId, workflowId) // ✅ Use workFlowId, not id
-      )
-    );
+  await db.delete(workflowData).where(
+    and(
+      eq(workflowData.userId, userId),
+      eq(workflowData.workFlowId, workflowId) // ✅ Use workFlowId, not id
+    )
+  );
   return { success: true, workflowId };
 };
 
 // ✅ FIXED: Added .returning() and use workFlowId
-export const updateWorkflowData = async (
-  db: Database,
-  data: UpdateWorkflowdata
-) => {
+export const updateWorkflowData = async (db: Database, data: UpdateWorkflowdata) => {
   const { workflowId, userId, flowData } = data;
   const [result] = await db
     .update(workflowData)
@@ -79,10 +74,7 @@ export const updateWorkflowData = async (
 };
 
 // ✅ FIXED: Added .returning() and use workFlowId
-export const updateWorkflowPlan = async (
-  db: Database,
-  data: UpdateWorkflowPlan
-) => {
+export const updateWorkflowPlan = async (db: Database, data: UpdateWorkflowPlan) => {
   const { workflowId, userId, plan } = data;
   const [result] = await db
     .update(workflowData)
@@ -98,10 +90,7 @@ export const updateWorkflowPlan = async (
 };
 
 // ✅ FIXED: Use workFlowId and add .limit(1) and .returning()
-export const getWorkflowDataByWorkflowId = async (
-  db: Database,
-  data: GetWorkflowByWorkflowId
-) => {
+export const getWorkflowDataByWorkflowId = async (db: Database, data: GetWorkflowByWorkflowId) => {
   const { workflowId, userId } = data;
   const result = await db
     .select()

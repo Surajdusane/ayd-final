@@ -1,23 +1,29 @@
-import React, { Suspense } from "react";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
-import { requireAuth } from "@/lib/auth-utils";
-import { batchPrefetch, getQueryClient, trpc } from "@/trpc/server";
 import Editor from "@/features/editor/components/editor";
+import { prefetchDocuments, prefetchWorkflow, prefetchWorkflowData } from "@/features/editor/server/prefetch";
+import { requireAuth } from "@/lib/auth-utils";
+import { HydrateClient } from "@/trpc/server";
 
 const page = async ({ params }: { params: Promise<{ workflowid: string }> }) => {
-  const { workflowid } = await params;
-  const queryClient = getQueryClient();
-  void queryClient.prefetchQuery(
-    trpc.workflow.getById.queryOptions({
-      workflowId: workflowid,
-    })
-  );
-  void queryClient.prefetchQuery(trpc.documents.getAllByUser.queryOptions());
-  
   await requireAuth();
-  return <Suspense fallback={<div>Loading...</div>}>
-    <Editor id={workflowid} />
-  </Suspense>;
+
+  const { workflowid } = await params;
+
+  prefetchDocuments();
+  prefetchWorkflow(workflowid);
+  prefetchWorkflowData(workflowid);
+
+  return (
+    <HydrateClient>
+      <ErrorBoundary fallback={<div>Error</div>}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Editor id={workflowid} />
+        </Suspense>
+      </ErrorBoundary>
+    </HydrateClient>
+  );
 };
 
 export default page;

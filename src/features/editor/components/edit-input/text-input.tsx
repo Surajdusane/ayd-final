@@ -1,24 +1,13 @@
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
+
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { EditInputProps } from ".";
 import { InputValidationType } from "../../types/input-types";
 
@@ -35,12 +24,7 @@ const textInputFormSchema = z.object({
   handleId: z.string(),
 });
 
-const TextInput = ({
-  defaultValues,
-  onSubmit,
-  onDelete,
-  disabled,
-}: EditInputProps) => {
+const TextInput = ({ defaultValues, onSubmit, onDelete, disabled }: EditInputProps) => {
   const form = useForm<z.infer<typeof textInputFormSchema>>({
     resolver: zodResolver(textInputFormSchema),
     defaultValues: {
@@ -106,13 +90,13 @@ const TextInput = ({
               <FormItem>
                 <div className="flex gap-x-2">
                   <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                    className="border-2 rounded-none size-5"
-                  />
-                </FormControl>
-                <FormLabel>Disabled</FormLabel>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      className="size-5 rounded-none border-2"
+                    />
+                  </FormControl>
+                  <FormLabel>Disabled</FormLabel>
                 </div>
                 <FormMessage />
               </FormItem>
@@ -124,14 +108,14 @@ const TextInput = ({
             render={({ field }) => (
               <FormItem>
                 <div className="flex gap-x-2">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                    className="border-2 rounded-none size-5"
-                  />
-                </FormControl>
-                <FormLabel>Required</FormLabel>
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      className="size-5 rounded-none border-2"
+                    />
+                  </FormControl>
+                  <FormLabel>Required</FormLabel>
                 </div>
                 <FormMessage />
               </FormItem>
@@ -159,11 +143,7 @@ const TextInput = ({
             <FormItem>
               <FormLabel>Validation Type</FormLabel>
               <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select validation type" />
                   </SelectTrigger>
@@ -188,7 +168,7 @@ const TextInput = ({
             <FormItem>
               <FormLabel>Min</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} { ...form.register('min', { valueAsNumber: true } ) }/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -201,7 +181,7 @@ const TextInput = ({
             <FormItem>
               <FormLabel>Max</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} { ...form.register('max', { valueAsNumber: true } ) }/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -211,7 +191,6 @@ const TextInput = ({
           <Button className="w-full" type="submit">
             Submit
           </Button>
-          
         </div>
       </form>
     </Form>

@@ -17,8 +17,10 @@ const colors = [
 
 export const ColorForHandle: Record<NodeStaticInputType, string> = (
   Object.keys(NodeStaticInputType) as Array<keyof typeof NodeStaticInputType>
-).reduce((acc, key, index) => {
-  acc[NodeStaticInputType[key as keyof typeof NodeStaticInputType]] =
-    colors[index];
-  return acc;
-}, {} as Record<NodeStaticInputType, string>);
+).reduce(
+  (acc, key, index) => {
+    acc[NodeStaticInputType[key as keyof typeof NodeStaticInputType]] = colors[index];
+    return acc;
+  },
+  {} as Record<NodeStaticInputType, string>
+);

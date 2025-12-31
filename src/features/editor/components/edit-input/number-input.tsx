@@ -1,24 +1,13 @@
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
+
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { EditInputProps } from ".";
 import { InputValidationType } from "../../types/input-types";
 
@@ -34,12 +23,7 @@ const numberInputFormSchema = z.object({
   handleId: z.string(),
 });
 
-const NumberInput = ({
-  defaultValues,
-  onSubmit,
-  onDelete,
-  disabled,
-}: EditInputProps) => {
+const NumberInput = ({ defaultValues, onSubmit, onDelete, disabled }: EditInputProps) => {
   const form = useForm<z.infer<typeof numberInputFormSchema>>({
     resolver: zodResolver(numberInputFormSchema),
     defaultValues: {
@@ -107,7 +91,7 @@ const NumberInput = ({
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="border-2 rounded-none size-5"
+                      className="size-5 rounded-none border-2"
                     />
                   </FormControl>
                   <FormLabel>Disabled</FormLabel>
@@ -126,7 +110,7 @@ const NumberInput = ({
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
-                      className="border-2 rounded-none size-5"
+                      className="size-5 rounded-none border-2"
                     />
                   </FormControl>
                   <FormLabel>Required</FormLabel>
@@ -158,7 +142,7 @@ const NumberInput = ({
             <FormItem>
               <FormLabel>Min</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} type="number"/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -171,7 +155,7 @@ const NumberInput = ({
             <FormItem>
               <FormLabel>Max</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} type="number"/>
               </FormControl>
               <FormMessage />
             </FormItem>

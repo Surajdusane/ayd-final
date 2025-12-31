@@ -1,6 +1,7 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { CreateFlowNode } from "../utils/create-flow-node"; 
-import { TaskType } from "../types/task"; 
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
+import { TaskType } from "../types/task";
+import { CreateFlowNode } from "../utils/create-flow-node";
 
 export const useWorkflow = (workflowId: string) =>
   useQuery({
@@ -11,9 +12,9 @@ export const useWorkflow = (workflowId: string) =>
         ? JSON.parse(stored)
         : {
             nodes: [CreateFlowNode(TaskType.FORM_INPUTS)],
-            edges: []
+            edges: [],
           };
-    }
+    },
   });
 
 export const useWorkflowMutation = (workflowId: string) => {
@@ -26,6 +27,6 @@ export const useWorkflowMutation = (workflowId: string) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["workflow", workflowId] });
-    }
+    },
   });
 };

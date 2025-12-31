@@ -1,11 +1,12 @@
+import { Edge } from "@xyflow/react";
 import { ParentTaskType } from "@/features/editor/types/task";
 import { OPERATION_EXECUTORS } from "./operations";
-import { Edge } from "@xyflow/react";
+import { executionPlan } from "@/features/editor/types/workflow";
 
 export function generateFinalOutput(
   edges: Edge[],
   formData: { handleId: string; value: any }[],
-  plan: any[]
+  plan: executionPlan
 ) {
   const runtime = new Map<string, any>();
 
@@ -23,7 +24,20 @@ export function generateFinalOutput(
     const edge = edges.find(
       (e: any) => e.target === nodeId && e.targetHandle === targetHandle
     );
-    return edge ? runtime.get(edge.sourceHandle as string) : undefined;
+    if (!edge) {
+      console.warn(
+        `No edge found for node ${nodeId} with targetHandle ${targetHandle}`
+      );
+      return undefined;
+    }
+
+    const value = runtime.get(edge.sourceHandle as string);
+    if (value === undefined) {
+      console.warn(
+        `No value found in runtime for sourceHandle ${edge.sourceHandle}`
+      );
+    }
+    return value;
   };
 
   /* ---------------------------
@@ -39,6 +53,7 @@ export function generateFinalOutput(
         continue;
       }
 
+      // Execute the operation and store results in runtime
       executor({
         node,
         runtime,
@@ -54,14 +69,28 @@ export function generateFinalOutput(
     .flatMap((p: any) => p.nodes)
     .find((n: any) => n.type === ParentTaskType.DOCUMENT_NODE);
 
+  if (!documentNode) {
+    console.error("No document node found in execution plan");
+    return null;
+  }
+
   const output: Record<string, any> = {};
 
   for (const input of documentNode.data.dynamicInputs) {
-    const edge = edges.find(
-      (e: any) => e.targetHandle === input.handleId
-    );
+    const edge = edges.find((e: any) => e.targetHandle === input.handleId);
     if (edge) {
-      output[input.name] = runtime.get(edge.sourceHandle as string);
+      const value = runtime.get(edge.sourceHandle as string);
+      if (value !== undefined) {
+        output[input.name] = value;
+      } else {
+        console.warn(
+          `No value found for document input ${input.name} (handle: ${input.handleId})`
+        );
+      }
+    } else {
+      console.warn(
+        `No edge connected to document input ${input.name} (handle: ${input.handleId})`
+      );
     }
   }
 

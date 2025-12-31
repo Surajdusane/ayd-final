@@ -1,18 +1,20 @@
-import { LucideProps } from "lucide-react";
-import { ParentTaskType, TaskType } from "./task";
 import { ReactElement } from "react";
 
+import { LucideProps } from "lucide-react";
+
+import { ParentTaskType, TaskType } from "./task";
+
 export enum InputType {
-    TEXT = "TEXT",
-    TEXTAREA = "TEXTAREA",
-    NUMBER = "NUMBER",
-    SELECT = "SELECT",
-    DATE = "DATE",
+  TEXT = "TEXT",
+  TEXTAREA = "TEXTAREA",
+  NUMBER = "NUMBER",
+  SELECT = "SELECT",
+  DATE = "DATE",
 }
 
 export interface NodeStaticInput {
   name: string;
-  type: NodeStaticInputType;  
+  type: NodeStaticInputType;
   helperText?: string;
   required?: boolean;
   hideHandle?: boolean;
@@ -22,45 +24,45 @@ export interface NodeStaticInput {
 }
 
 export enum NodeStaticInputType {
-    STRING = "STRING",
-    NUMBER = "NUMBER",
-    SELECT = "SELECT",
-    DATE = "DATE",
+  STRING = "STRING",
+  NUMBER = "NUMBER",
+  SELECT = "SELECT",
+  DATE = "DATE",
 }
 
 export enum InputValidationType {
-    NONE = "NONE",
-    EMAIL = "EMAIL",
-    PHONE = "PHONE",
+  NONE = "NONE",
+  EMAIL = "EMAIL",
+  PHONE = "PHONE",
 }
 
 export type FormFieldType = {
-  type: InputType
-  name: string
-  label: string
-  placeholder?: string
-  description?: string
-  disabled: boolean
-  value: string | boolean | Date | number | string[]
-  selectValue?: string[]
-  validationType?: InputValidationType
-  required?: boolean
-  min?: number
-  max?: number
-  dateFormat?: DateFormat
-  outputType: NodeStaticInputType
-  handleId: string
-}
+  type: InputType;
+  name: string;
+  label: string;
+  placeholder?: string;
+  description?: string;
+  disabled: boolean;
+  value: string | boolean | Date | number | string[];
+  selectValue?: string[];
+  validationType?: InputValidationType;
+  required?: boolean;
+  min?: number;
+  max?: number;
+  dateFormat?: DateFormat;
+  outputType: NodeStaticInputType;
+  handleId: string;
+};
 
 export type StaticInputConfigType = {
-    type: TaskType
-    label: string
-    icon: (props: LucideProps) => ReactElement
-    parentTaskType: ParentTaskType
-    entryPoint: boolean,
-    inputs: Array<NodeStaticInput>,
-    outputs: Array<any>
-}
+  type: TaskType;
+  label: string;
+  icon: (props: LucideProps) => ReactElement;
+  parentTaskType: ParentTaskType;
+  entryPoint: boolean;
+  inputs: Array<NodeStaticInput>;
+  outputs: Array<any>;
+};
 
 export enum DateFormat {
   // 🌐 ISO / International
@@ -86,27 +88,26 @@ export enum DateFormat {
   TEXT_US = "Month DD YYYY",
   TEXT_DAY = "Day, DD Month YYYY",
   TEXT_US_DAY = "Day, Month DD, YYYY",
-
 }
 
 export enum LetterCase {
-  LOWERCASE = "lowercase",     // e.g. "november"
-  UPPERCASE = "uppercase",     // e.g. "NOVEMBER"
-  CAPITALIZE = "capitalize",   // e.g. "November"
-  TITLECASE = "titlecase",     // e.g. "November Fourth, Two Thousand Twenty-Five"
+  LOWERCASE = "lowercase", // e.g. "november"
+  UPPERCASE = "uppercase", // e.g. "NOVEMBER"
+  CAPITALIZE = "capitalize", // e.g. "November"
+  TITLECASE = "titlecase", // e.g. "November Fourth, Two Thousand Twenty-Five"
   SENTENCECASE = "sentencecase", // e.g. "November fourth, 2025"
-  MIXEDCASE = "mixedcase"      // e.g. "nOvEmBeR"
+  MIXEDCASE = "mixedcase", // e.g. "nOvEmBeR"
 }
 
 export enum NumberFormat {
-  UNGROUPED = "ungrouped",               // 1234567
-  COMPACT_SHORT = "compact_short",   // 1.2K, 3.4M
-  COMPACT_LONG = "compact_long",     // 1.2 thousand, 3.4 million
+  UNGROUPED = "ungrouped", // 1234567
+  COMPACT_SHORT = "compact_short", // 1.2K, 3.4M
+  COMPACT_LONG = "compact_long", // 1.2 thousand, 3.4 million
   WESTERN_GROUPING = "western_grouping", // 450,508
-  INDIAN_GROUPING = "indian_grouping",   // 4,58,850
+  INDIAN_GROUPING = "indian_grouping", // 4,58,850
 }
 
 export type DocumentInputProps = {
-    variable: string
-    handleId: string
-}
+  variable: string;
+  handleId: string;
+};

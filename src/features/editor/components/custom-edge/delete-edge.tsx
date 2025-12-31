@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import React from "react";
 import {
   BaseEdge,
   EdgeLabelRenderer,
@@ -7,18 +7,15 @@ import {
   getStraightPath,
   useReactFlow,
 } from "@xyflow/react";
-import React from "react";
+
+import { Button } from "@/components/ui/button";
 
 const DeleteEdge = (props: EdgeProps) => {
   const [edgePath, labelX, labelY] = getStraightPath(props);
   const { setEdges } = useReactFlow();
   return (
     <>
-      <BaseEdge
-        path={edgePath}
-        markerEnd={props.markerEnd}
-        style={props.style}
-      />
+      <BaseEdge path={edgePath} markerEnd={props.markerEnd} style={props.style} />
       <EdgeLabelRenderer>
         <div
           style={{
@@ -30,7 +27,7 @@ const DeleteEdge = (props: EdgeProps) => {
           <Button
             variant={"outline"}
             size={"icon"}
-            className="size-5 border cursor-pointer rounded-full text-xs leading-none hover:shadow-lg"
+            className="size-5 cursor-pointer rounded-full border text-xs leading-none hover:shadow-lg"
             onClick={() => {
               setEdges((eds) => eds.filter((e) => e.id !== props.id));
             }}

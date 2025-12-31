@@ -14,9 +14,9 @@ const Topbar = ({ title, workflowId }: { title: string; workflowId: string }) =>
       </div>
       <div className="flex flex-1 items-center justify-end gap-2">
         <FormPreviewButton workflowId={workflowId} />
-        <TestButton workflowId={workflowId} />
+        {/* <TestButton workflowId={workflowId} /> */}
         <SaveButton workflowId={workflowId} />
-        <PublishButton />
+        <PublishButton workflowId={workflowId} />
       </div>
     </header>
   );

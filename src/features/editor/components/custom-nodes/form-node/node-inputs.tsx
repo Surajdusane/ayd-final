@@ -1,17 +1,11 @@
 import React, { useCallback } from "react";
-import { Reorder } from "motion/react";
-import NodeInput from "./node-input";
 import { useReactFlow, useUpdateNodeInternals } from "@xyflow/react";
 
-const NodeInputs = ({
-  list,
-  setList,
-  nodeId = "formId",
-}: {
-  list: Array<any>;
-  setList: any;
-  nodeId?: string;
-}) => {
+import { Reorder } from "motion/react";
+
+import NodeInput from "./node-input";
+
+const NodeInputs = ({ list, setList, nodeId = "formId" }: { list: Array<any>; setList: any; nodeId?: string }) => {
   const { updateNodeData } = useReactFlow();
   const updateNodeInternals = useUpdateNodeInternals();
 
@@ -36,13 +30,10 @@ const NodeInputs = ({
       axis="y"
       values={list}
       onReorder={handleReorder}
-      className="flex flex-col gap-2 bg-background/50 rounded-lg p-2"
+      className="bg-background/50 flex flex-col gap-2 rounded-lg p-2"
     >
       {list.map((input) => (
-        <NodeInput
-          key={input.handleId}
-          input={input}
-        />
+        <NodeInput key={input.handleId} input={input} />
       ))}
     </Reorder.Group>
   );

@@ -1,9 +1,10 @@
 import { Edge, getIncomers } from "@xyflow/react";
+import { toast } from "sonner";
+
+import { useWorkflowValidationStore } from "../store/workflow-validation-store";
 import { tasks } from "../task";
 import { AppNode } from "../types/appNode";
-import { useWorkflowValidationStore } from "../store/workflow-validation-store";
-import { toast } from "sonner";
-import { WorkflowExecutionPlan } from "../types/workflpw";
+import { WorkflowExecutionPlan } from "../types/workflow";
 
 function getInvalidInputs(node: AppNode, edges: Edge[], planned: Set<string>) {
   const invalidInputs: string[] = [];
@@ -14,17 +15,11 @@ function getInvalidInputs(node: AppNode, edges: Edge[], planned: Set<string>) {
   for (const input of inputs) {
     const rawValue = node.data.inputs?.[input.name];
 
-    const hasLiteralValue =
-      rawValue !== undefined &&
-      rawValue !== null &&
-      String(rawValue).length > 0;
+    const hasLiteralValue = rawValue !== undefined && rawValue !== null && String(rawValue).length > 0;
 
-    const inputLinkedToOutput = incomingEdges.find(
-      (edge) => edge.targetHandle === input.name
-    );
+    const inputLinkedToOutput = incomingEdges.find((edge) => edge.targetHandle === input.name);
 
-    const providedByPlannedNode =
-      !!inputLinkedToOutput && planned.has(inputLinkedToOutput.source);
+    const providedByPlannedNode = !!inputLinkedToOutput && planned.has(inputLinkedToOutput.source);
 
     // Required: must have value or be wired from a planned node
     if (input.required && !hasLiteralValue && !providedByPlannedNode) {
@@ -42,15 +37,12 @@ function getInvalidInputs(node: AppNode, edges: Edge[], planned: Set<string>) {
   return invalidInputs;
 }
 
-
 export function createExecutionPlan(nodes: AppNode[], edges: Edge[]) {
   const entryPoint = nodes.find((node) => tasks[node.data.type].entryPoint);
 
   if (!entryPoint) {
     toast.error("No entry node found in workflow");
-    useWorkflowValidationStore.getState().setInvalidNodeIds(
-      nodes.map((n) => n.id)
-    );
+    useWorkflowValidationStore.getState().setInvalidNodeIds(nodes.map((n) => n.id));
     return null;
   }
 
@@ -61,8 +53,7 @@ export function createExecutionPlan(nodes: AppNode[], edges: Edge[]) {
   }
 
   // always clear previous errors when rerunning
-  const { clearInvalidNodeIds, setInvalidNodeIds } =
-    useWorkflowValidationStore.getState();
+  const { clearInvalidNodeIds, setInvalidNodeIds } = useWorkflowValidationStore.getState();
   clearInvalidNodeIds();
 
   const planned = new Set<string>();
@@ -122,9 +113,7 @@ export function createExecutionPlan(nodes: AppNode[], edges: Edge[]) {
       }
 
       // layer rule: nodePhase = 1 + max(depPhase)
-      const maxIncomingPhase = Math.max(
-        ...incomers.map((i) => nodePhase.get(i.id) ?? 1)
-      );
+      const maxIncomingPhase = Math.max(...incomers.map((i) => nodePhase.get(i.id) ?? 1));
 
       if (maxIncomingPhase === phase - 1) {
         currentPhaseNodes.push(node);
@@ -135,9 +124,7 @@ export function createExecutionPlan(nodes: AppNode[], edges: Edge[]) {
 
     if (currentPhaseNodes.length === 0) {
       // couldn't place any more nodes in this phase
-      const remainingUnplanned = nodes
-        .filter((n) => !planned.has(n.id))
-        .map((n) => n.id);
+      const remainingUnplanned = nodes.filter((n) => !planned.has(n.id)).map((n) => n.id);
 
       remainingUnplanned.forEach((id) => invalidNodeIds.add(id));
 

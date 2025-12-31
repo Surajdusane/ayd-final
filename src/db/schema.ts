@@ -1,3 +1,4 @@
+import { executionPlan, reactflowData } from "@/features/editor/types/workflow";
 import { jsonb, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { nanoid } from "nanoid";
 
@@ -26,8 +27,8 @@ export const workFlows = pgTable("workflows", {
 
 export const workflowData = pgTable("workflowdata", {
   id: text("id").primaryKey().notNull().$defaultFn(generateId),
-  flowData: jsonb("flowdata"),
-  plan: jsonb("plan"),
+  flowData: jsonb("flowdata").$type<reactflowData>(),
+  plan: jsonb("plan").$type<executionPlan>(),
   workFlowId: text("work_flow_id")
     .notNull()
     .references(() => workFlows.id, { onDelete: "cascade" }),
@@ -37,6 +38,9 @@ export const workflowData = pgTable("workflowdata", {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });
+
+
+
 
 export const documents = pgTable("documents", {
   id: text("id").primaryKey().notNull(),

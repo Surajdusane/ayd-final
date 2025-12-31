@@ -1,17 +1,20 @@
+import { useEffect, useId, useState } from "react";
+
+import { Asterisk } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { NodeStaticInput } from "../../types/input-types"; 
-import { Asterisk } from "lucide-react";
-import { useEffect, useId, useState } from "react";
+
+import { NodeStaticInput } from "../../types/input-types";
 
 type SelectInputProps = {
   input: NodeStaticInput;
   value: string;
   updateNodeParamValue: (newValue: string) => void;
   disabled?: boolean;
-}
+};
 
 const SelectInput = ({ input, value, disabled, updateNodeParamValue }: SelectInputProps) => {
   const id = useId();
@@ -22,17 +25,20 @@ const SelectInput = ({ input, value, disabled, updateNodeParamValue }: SelectInp
   }, [value]);
 
   // Default options if none provided - you can customize this
-  const selectOptions = input.options 
+  const selectOptions = input.options;
   if (!selectOptions) return null;
 
   return (
-    <div className="space-y-3 p-1 w-full">
-      <Label htmlFor={id} className="text-xs flex font-medium">
+    <div className="w-full space-y-3 p-1">
+      <Label htmlFor={id} className="flex text-xs font-medium">
         {input.name}
-        {input.required 
-          ? <Badge variant="secondary" className="flex justify-center items-center"><Asterisk /></Badge>
-          : <Badge variant="secondary">Optional</Badge>
-        }
+        {input.required ? (
+          <Badge variant="secondary" className="flex items-center justify-center">
+            <Asterisk />
+          </Badge>
+        ) : (
+          <Badge variant="secondary">Optional</Badge>
+        )}
       </Label>
       <Select
         value={internalValue}
@@ -53,9 +59,7 @@ const SelectInput = ({ input, value, disabled, updateNodeParamValue }: SelectInp
           ))}
         </SelectContent>
       </Select>
-      {input.helperText && (
-        <p className="text-xs text-muted-foreground">{input.helperText}</p>
-      )}
+      {input.helperText && <p className="text-muted-foreground text-xs">{input.helperText}</p>}
     </div>
   );
 };

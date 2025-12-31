@@ -1,20 +1,22 @@
 "use client";
-import { NodeProps } from "@xyflow/react";
+
 import { memo, useEffect, useState } from "react";
+import { NodeProps } from "@xyflow/react";
+
+import { Separator } from "@/components/ui/separator";
+import { tasks } from "@/features/editor/task";
+import { AppNodeData } from "@/features/editor/types/appNode";
+
 import { NodeCard } from "../node-card";
 import { NodeHeader } from "../node-header";
-import { AppNodeData } from "@/features/editor/types/appNode";
-import { tasks } from "@/features/editor/task";
-import OpreationInputs from "./opreation-inputs";
 import OpreationInput from "./opreation-input";
-import OpreationOutputs from "./opreation-outputs";
+import OpreationInputs from "./opreation-inputs";
 import OpreationOutput from "./opreation-output";
-import { Separator } from "@/components/ui/separator";
+import OpreationOutputs from "./opreation-outputs";
 
 const OpreationNode = memo((props: NodeProps) => {
   const nodeData = props.data as AppNodeData;
   const task = tasks[nodeData.type];
-
 
   return (
     <NodeCard nodeId={props.id}>

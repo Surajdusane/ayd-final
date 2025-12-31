@@ -1,16 +1,10 @@
 // dynamic-form-preview.tsx
 "use client";
 
-import {
-  FieldGroup,
-  FieldSet
-} from "@/components/ui/field";
 import React from "react";
 
-import {
-  FormFieldType,
-  InputType
-} from "@/features/editor/types/input-types";
+import { FieldGroup, FieldSet } from "@/components/ui/field";
+import { FormFieldType, InputType } from "@/features/editor/types/input-types";
 
 import DateFormInput from "./date-input";
 import NumberFormInput from "./number-input";
@@ -19,16 +13,10 @@ import TextFormInput from "./text-input";
 
 type DynamicFormFieldsProps = {
   fields: FormFieldType[];
-  onFieldChange: (
-    handleId: string,
-    value: string | number | boolean | Date | string[]
-  ) => void;
+  onFieldChange: (handleId: string, value: string | number | boolean | Date | string[]) => void;
 };
 
-const DynamicFormFields: React.FC<DynamicFormFieldsProps> = ({
-  fields,
-  onFieldChange,
-}) => {
+const DynamicFormFields: React.FC<DynamicFormFieldsProps> = ({ fields, onFieldChange }) => {
   const renderField = (field: FormFieldType) => {
     switch (field.type) {
       case InputType.TEXT:
@@ -52,11 +40,11 @@ const DynamicFormFields: React.FC<DynamicFormFieldsProps> = ({
   };
 
   return (
-      <FieldGroup>
-        {fields.map((field) => (
-          <div key={field.handleId || field.name}>{renderField(field)}</div>
-        ))}
-      </FieldGroup>
+    <FieldGroup>
+      {fields.map((field) => (
+        <div key={field.handleId || field.name}>{renderField(field)}</div>
+      ))}
+    </FieldGroup>
   );
 };
 

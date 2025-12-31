@@ -1,5 +1,6 @@
 "use client";
 
+import { RouterOutputs } from "@/trpc/routers/_app";
 import {
   addEdge,
   Background,
@@ -13,17 +14,18 @@ import {
   useReactFlow,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+import { useSetAtom } from "jotai";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useMemo } from "react";
-import { useWorkflow, useWorkflowMutation } from "../../hooks/use-workflow";
+import { useValidConnection } from "../../hooks/use-valid-connection";
+import { editorAtom } from "../../store/atoms";
 import { AppNode } from "../../types/appNode";
 import { ParentTaskType } from "../../types/task";
+import DeleteEdge from "../custom-edge/delete-edge";
+import DocumentNode from "../custom-nodes/document-node";
 import FormNode from "../custom-nodes/form-node";
 import OpreationNode from "../custom-nodes/opreation-node";
-import DeleteEdge from "../custom-edge/delete-edge";
-import { useValidConnection } from "../../hooks/use-valid-connection";
-import DocumentNode from "../custom-nodes/document-node";
-import { RouterOutputs } from "@/trpc/routers/_app";
+import { useWorkflow } from "../../hooks/use-workflow";
 
 // const nodeTypes = {
 //   [ParentTaskType.FORM_NODE]: FormNode,
@@ -40,30 +42,18 @@ const FlowEditor = ({ workflow }: { workflow: workflow }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState<AppNode>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const { updateNodeData } = useReactFlow();
-
   const { theme } = useTheme();
 
-  // useEffect(() => console.log(nodes), [nodes]);
-
-  const { data: workflowData } = useWorkflow(workflow.id);
-  const { mutate } = useWorkflowMutation(workflow.id);
+  const setEditor = useSetAtom(editorAtom);
+  const {data : workflowData} = useWorkflow(workflow.id)
 
   useEffect(() => {
     if (workflowData) {
-      setNodes(workflowData.nodes);
-      setEdges(workflowData.edges);
+      setNodes(workflowData.flowData.nodes);
+      setEdges(workflowData.flowData.edges);
     }
     // only run when the data changes
   }, [workflowData, setEdges, setNodes]);
-
-  // Save to localStorage whenever nodes/edges change (debounced)
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      mutate({ nodes, edges });
-    }, 500); // debounce 500ms
-
-    return () => clearTimeout(timeout);
-  }, [nodes, edges, mutate]);
 
   const onConnect = useCallback(
     (connection: Connection) => {
@@ -119,6 +109,7 @@ const FlowEditor = ({ workflow }: { workflow: workflow }) => {
         connectionRadius={20}
         onlyRenderVisibleElements={false}
         isValidConnection={isValidConnection}
+        onInit={setEditor}
       >
         <Controls position="bottom-right" />
         <Background

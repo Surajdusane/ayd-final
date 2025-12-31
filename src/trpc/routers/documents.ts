@@ -1,5 +1,5 @@
-import { TRPCError } from "@trpc/server";
 import { redis } from "@/redis";
+import { TRPCError } from "@trpc/server";
 
 import {
   createDocument,
@@ -20,13 +20,13 @@ import {
 } from "../schemas/documents";
 
 type DocumentType = {
-    id: string;
-    name: string | null;
-    createdAt: Date;
-    metadata: Record<string, any>;
-    userId: string;
-    path: string;
-}
+  id: string;
+  name: string | null;
+  createdAt: Date;
+  metadata: Record<string, any>;
+  userId: string;
+  path: string;
+};
 
 export const documentsRouter = createTRPCRouter({
   // Create document
@@ -62,10 +62,7 @@ export const documentsRouter = createTRPCRouter({
     });
 
     // Revalidate cache
-    await Promise.all([
-      redis.del(`user:${userId}:documents`),
-      redis.del(`document:${input.path}`),
-    ]);
+    await Promise.all([redis.del(`user:${userId}:documents`), redis.del(`document:${input.path}`)]);
 
     return deleted;
   }),
@@ -79,10 +76,7 @@ export const documentsRouter = createTRPCRouter({
     });
 
     // Revalidate cache
-    await Promise.all([
-      redis.del(`user:${userId}:documents`),
-      redis.del(`document:${input.id}`),
-    ]);
+    await Promise.all([redis.del(`user:${userId}:documents`), redis.del(`document:${input.id}`)]);
 
     return updated as DocumentType;
   }),
@@ -94,7 +88,7 @@ export const documentsRouter = createTRPCRouter({
     // Check cache first
     const cached = await redis.get(cacheKey);
     if (cached) {
-      return cached as DocumentType
+      return cached as DocumentType;
     }
 
     // Fetch from DB
@@ -105,9 +99,9 @@ export const documentsRouter = createTRPCRouter({
 
     if (doc) {
       await redis.set(cacheKey, JSON.stringify(doc), {
-      ex: 60 * 5, // cache for 5 min
-      nx: true, // only set if not exists
-    }); // cache for 5 min
+        ex: 60 * 5, // cache for 5 min
+        nx: true, // only set if not exists
+      }); // cache for 5 min
     }
 
     return doc as DocumentType;
@@ -120,7 +114,7 @@ export const documentsRouter = createTRPCRouter({
     // Check cache
     const cached = await redis.get(cacheKey);
     if (cached) {
-      return cached as DocumentType[]
+      return cached as DocumentType[];
     }
 
     // Fetch from DB
@@ -129,7 +123,7 @@ export const documentsRouter = createTRPCRouter({
     await redis.set(cacheKey, JSON.stringify(docs), {
       ex: 60 * 5, // cache for 5 min
       nx: true, // only set if not exists
-    }); 
+    });
 
     return docs as DocumentType[];
   }),
