@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { Loader2 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useWorkflow } from "@/features/editor/hooks/use-workflow";
@@ -30,6 +32,7 @@ const DynamicFormPreviewClient: React.FC<DynamicFormPreviewClientProps> = ({
 }) => {
   const [fields, setFields] = useState<FormFieldType[]>(initialFields);
   const [exportFormat, setExportFormat] = useState<ExportFormat>("PDF");
+  const [genLoading, setGenLoading] = useState(false);
   const {
     isLoading,
     progress,
@@ -59,6 +62,7 @@ const DynamicFormPreviewClient: React.FC<DynamicFormPreviewClientProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setGenLoading(true);
 
     const finaldata = fields.map((field) => {
       return { handleId: field.handleId, value: field.value };
@@ -80,6 +84,7 @@ const DynamicFormPreviewClient: React.FC<DynamicFormPreviewClientProps> = ({
     };
 
     await generateSingleDocument(documentConfig);
+    setGenLoading(false);
   };
 
   return (
@@ -99,8 +104,15 @@ const DynamicFormPreviewClient: React.FC<DynamicFormPreviewClientProps> = ({
         </Select>
       </div>
 
-      <Button type="submit" disabled={isLoading}>
-        {isLoading ? "Generating..." : "Generate"}
+      <Button type="submit" disabled={isLoading || genLoading}>
+        {isLoading || genLoading ? (
+          <>
+            <Loader2 className={"mr-1 size-4 animate-spin"} />
+            Generating...
+          </>
+        ) : (
+          "Generate"
+        )}
       </Button>
     </form>
   );
