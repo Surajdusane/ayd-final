@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Edge, Node } from "@xyflow/react";
 import { useDebounce } from "use-debounce";
+
 import { AppNode } from "../types/appNode";
 import { useWorkflow, useWorkflowMutation } from "./use-workflow";
 
@@ -20,12 +21,7 @@ interface LocalStorageData {
   lastSyncAttempt?: string;
 }
 
-export const useWorkflowSync = ({ 
-  workflowId, 
-  nodes, 
-  edges, 
-  enabled = true 
-}: UseWorkflowSyncProps) => {
+export const useWorkflowSync = ({ workflowId, nodes, edges, enabled = true }: UseWorkflowSyncProps) => {
   const { data: workflowData, isLoading, dbData } = useWorkflow(workflowId);
   const { mutate: saveToDatabase } = useWorkflowMutation(workflowId);
   const [lastSyncTime, setLastSyncTime] = useState<string | null>(null);
@@ -51,7 +47,7 @@ export const useWorkflowSync = ({
         nodes: data.nodes as AppNode[],
         edges: data.edges,
         updatedAt: currentTime,
-        syncError: false
+        syncError: false,
       };
       localStorage.setItem(workflowId, JSON.stringify(storedData));
       return currentTime;
@@ -62,12 +58,10 @@ export const useWorkflowSync = ({
   const checkSyncNeeded = () => {
     const localData = getLocalStorageData();
     if (!localData || !localData.updatedAt) return false;
-    
-    const dbUpdatedAt = dbData?.updatedAt 
-      ? new Date(dbData.updatedAt).getTime() 
-      : 0;
+
+    const dbUpdatedAt = dbData?.updatedAt ? new Date(dbData.updatedAt).getTime() : 0;
     const localUpdatedAt = new Date(localData.updatedAt).getTime();
-    
+
     // If localStorage is newer, sync is needed
     return localUpdatedAt > dbUpdatedAt;
   };
@@ -82,64 +76,63 @@ export const useWorkflowSync = ({
   // Auto-save when changes are detected
   useEffect(() => {
     if (!enabled || isLoading || !initialLoadRef.current) return;
-    
+
     // Create a unique signature for current state to avoid unnecessary saves
     const currentStateSignature = JSON.stringify({
-      nodes: debouncedNodes.map(n => ({
+      nodes: debouncedNodes.map((n) => ({
         id: n.id,
         position: n.position,
-        data: n.data
+        data: n.data,
       })),
-      edges: debouncedEdges.map(e => ({
+      edges: debouncedEdges.map((e) => ({
         id: e.id,
         source: e.source,
-        target: e.target
-      }))
+        target: e.target,
+      })),
     });
-    
+
     // Only save if state has actually changed
     if (lastSaveRef.current === currentStateSignature) return;
-    
+
     const data = { nodes: debouncedNodes, edges: debouncedEdges };
     const timestamp = saveToLocalStorage(data);
     lastSaveRef.current = currentStateSignature;
-    
+
     // Mark that we have unsynced changes
     setHasUnsyncedChanges(true);
     setLastSyncTime(timestamp || null);
-    
+
     // Save to database (this will also update localStorage with server timestamp)
     saveToDatabase(data);
-    
   }, [debouncedNodes, debouncedEdges, enabled, isLoading, saveToDatabase]);
 
   // Initial load: Sync localStorage with database if needed
   useEffect(() => {
     if (!isLoading && !initialLoadRef.current) {
       initialLoadRef.current = true;
-      
+
       const localData = getLocalStorageData();
-      
+
       // If we have local data and either:
       // 1. No database data exists, OR
       // 2. Local data is newer than database
       if (localData && (!dbData || checkSyncNeeded())) {
         saveToDatabase({
           nodes: localData.nodes,
-          edges: localData.edges
+          edges: localData.edges,
         });
       }
-      
+
       // If database has newer data, update localStorage
       if (dbData && dbData.updatedAt) {
         const localTime = localData?.updatedAt ? new Date(localData.updatedAt).getTime() : 0;
         const dbTime = new Date(dbData.updatedAt).getTime();
-        
+
         if (dbTime > localTime) {
           saveToLocalStorage(
-            { 
-              nodes: dbData.flowData?.nodes || [], 
-              edges: dbData.flowData?.edges || [] 
+            {
+              nodes: dbData.flowData?.nodes || [],
+              edges: dbData.flowData?.edges || [],
             },
             dbData.updatedAt as string
           );
@@ -159,7 +152,7 @@ export const useWorkflowSync = ({
         if (now - lastAttempt > 30000) {
           saveToDatabase({
             nodes: localData.nodes,
-            edges: localData.edges
+            edges: localData.edges,
           });
         }
       }
@@ -174,16 +167,15 @@ export const useWorkflowSync = ({
     isLoading,
     hasUnsyncedChanges,
     lastSyncTime,
-    saveToLocalStorage: (data: { nodes: Node[]; edges: Edge[] }) => 
-      saveToLocalStorage(data),
+    saveToLocalStorage: (data: { nodes: Node[]; edges: Edge[] }) => saveToLocalStorage(data),
     retrySync: () => {
       const localData = getLocalStorageData();
       if (localData) {
         saveToDatabase({
           nodes: localData.nodes,
-          edges: localData.edges
+          edges: localData.edges,
         });
       }
-    }
+    },
   };
 };

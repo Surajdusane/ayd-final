@@ -1,13 +1,11 @@
 import { Edge } from "@xyflow/react";
+
 import { ParentTaskType } from "@/features/editor/types/task";
-import { OPERATION_EXECUTORS } from "./operations";
 import { executionPlan } from "@/features/editor/types/workflow";
 
-export function generateFinalOutput(
-  edges: Edge[],
-  formData: { handleId: string; value: any }[],
-  plan: executionPlan
-) {
+import { OPERATION_EXECUTORS } from "./operations";
+
+export function generateFinalOutput(edges: Edge[], formData: { handleId: string; value: any }[], plan: executionPlan) {
   const runtime = new Map<string, any>();
 
   /* ---------------------------
@@ -21,21 +19,15 @@ export function generateFinalOutput(
      Helper: resolve edge input
   ----------------------------*/
   const getInputValue = (nodeId: string, targetHandle: string) => {
-    const edge = edges.find(
-      (e: any) => e.target === nodeId && e.targetHandle === targetHandle
-    );
+    const edge = edges.find((e: any) => e.target === nodeId && e.targetHandle === targetHandle);
     if (!edge) {
-      console.warn(
-        `No edge found for node ${nodeId} with targetHandle ${targetHandle}`
-      );
+      console.warn(`No edge found for node ${nodeId} with targetHandle ${targetHandle}`);
       return undefined;
     }
 
     const value = runtime.get(edge.sourceHandle as string);
     if (value === undefined) {
-      console.warn(
-        `No value found in runtime for sourceHandle ${edge.sourceHandle}`
-      );
+      console.warn(`No value found in runtime for sourceHandle ${edge.sourceHandle}`);
     }
     return value;
   };
@@ -65,9 +57,7 @@ export function generateFinalOutput(
   /* ---------------------------
      DOCUMENT output
   ----------------------------*/
-  const documentNode = plan
-    .flatMap((p: any) => p.nodes)
-    .find((n: any) => n.type === ParentTaskType.DOCUMENT_NODE);
+  const documentNode = plan.flatMap((p: any) => p.nodes).find((n: any) => n.type === ParentTaskType.DOCUMENT_NODE);
 
   if (!documentNode) {
     console.error("No document node found in execution plan");
@@ -83,14 +73,10 @@ export function generateFinalOutput(
       if (value !== undefined) {
         output[input.name] = value;
       } else {
-        console.warn(
-          `No value found for document input ${input.name} (handle: ${input.handleId})`
-        );
+        console.warn(`No value found for document input ${input.name} (handle: ${input.handleId})`);
       }
     } else {
-      console.warn(
-        `No edge connected to document input ${input.name} (handle: ${input.handleId})`
-      );
+      console.warn(`No edge connected to document input ${input.name} (handle: ${input.handleId})`);
     }
   }
 

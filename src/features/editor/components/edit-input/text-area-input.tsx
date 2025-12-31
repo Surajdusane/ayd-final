@@ -139,7 +139,7 @@ const TextAreaInput = ({ defaultValues, onSubmit, onDelete, disabled }: EditInpu
             <FormItem>
               <FormLabel>Min</FormLabel>
               <FormControl>
-                <Input {...field} type="number"/>
+                <Input {...field} type="number" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -152,7 +152,7 @@ const TextAreaInput = ({ defaultValues, onSubmit, onDelete, disabled }: EditInpu
             <FormItem>
               <FormLabel>Max</FormLabel>
               <FormControl>
-                <Input {...field} type="number"/>
+                <Input {...field} type="number" />
               </FormControl>
               <FormMessage />
             </FormItem>

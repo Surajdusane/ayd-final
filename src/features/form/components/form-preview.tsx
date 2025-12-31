@@ -1,19 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useWorkflow } from "@/features/editor/hooks/use-workflow";
 import { AppNode } from "@/features/editor/types/appNode";
 import { FormFieldType } from "@/features/editor/types/input-types";
-
-import DynamicFormFields from "./dynamic-form";
 import { executionPlan, reactflowData } from "@/features/editor/types/workflow";
-import { generateFinalOutput } from "@/features/execution/utils/final-execution";
 import { useDocumentGenerator } from "@/features/execution/hooks/use-document-generator";
 import { useGetDocumentsLink } from "@/features/execution/hooks/use-get-documents-link";
-import { toast } from "sonner";
+import { generateFinalOutput } from "@/features/execution/utils/final-execution";
+
+import DynamicFormFields from "./dynamic-form";
 
 type ExportFormat = "PDF" | "WORD";
 
@@ -23,7 +23,11 @@ type DynamicFormPreviewClientProps = {
   workflowPlan: executionPlan;
 };
 
-const DynamicFormPreviewClient: React.FC<DynamicFormPreviewClientProps> = ({ initialFields, workflowData, workflowPlan }) => {
+const DynamicFormPreviewClient: React.FC<DynamicFormPreviewClientProps> = ({
+  initialFields,
+  workflowData,
+  workflowPlan,
+}) => {
   const [fields, setFields] = useState<FormFieldType[]>(initialFields);
   const [exportFormat, setExportFormat] = useState<ExportFormat>("PDF");
   const {
@@ -73,8 +77,8 @@ const DynamicFormPreviewClient: React.FC<DynamicFormPreviewClientProps> = ({ ini
       template: documentLink as string,
       data: executionData?.values as Record<string, string | number | boolean>,
       filename: "document.docx",
-    }
-    
+    };
+
     await generateSingleDocument(documentConfig);
   };
 

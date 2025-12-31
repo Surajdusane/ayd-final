@@ -21,7 +21,7 @@ const FormPreviewButton = ({ workflowId }: { workflowId: string }) => {
   const { data: workflow } = useWorkflow(workflowId);
   if (!workflow) return null;
   const formNode = workflow.flowData.nodes.find((node: AppNode) => node.type === "FORM_NODE");
-  const dynamicInputs = formNode?.data?.dynamicInputs as FormFieldType[]; 
+  const dynamicInputs = formNode?.data?.dynamicInputs as FormFieldType[];
 
   return (
     <Dialog>

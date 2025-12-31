@@ -1,9 +1,9 @@
 import { Edge } from "@xyflow/react";
 
 import { ParentTaskType } from "@/features/editor/types/task";
+import { executionPlan } from "@/features/editor/types/workflow";
 
 import { OPERATION_EXECUTORS } from "./operations";
-import { executionPlan } from "@/features/editor/types/workflow";
 
 export function generateFinalOutput(edges: Edge[], formData: { handleId: string; value: any }[], plan: executionPlan) {
   const runtime = new Map<string, any>();

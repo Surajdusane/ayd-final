@@ -12,7 +12,7 @@ export async function createTRPCContextInner() {
 
     if (error) {
       console.error("Auth error:", error.message);
-      console.log("--------------------------------------")
+      console.log("--------------------------------------");
       return {
         session: null,
         db,

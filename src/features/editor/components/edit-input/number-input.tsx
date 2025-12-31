@@ -142,7 +142,7 @@ const NumberInput = ({ defaultValues, onSubmit, onDelete, disabled }: EditInputP
             <FormItem>
               <FormLabel>Min</FormLabel>
               <FormControl>
-                <Input {...field} type="number"/>
+                <Input {...field} type="number" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -155,7 +155,7 @@ const NumberInput = ({ defaultValues, onSubmit, onDelete, disabled }: EditInputP
             <FormItem>
               <FormLabel>Max</FormLabel>
               <FormControl>
-                <Input {...field} type="number"/>
+                <Input {...field} type="number" />
               </FormControl>
               <FormMessage />
             </FormItem>

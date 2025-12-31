@@ -1,3 +1,7 @@
+import { Edge } from "@xyflow/react";
+import { and, eq } from "drizzle-orm";
+import z from "zod";
+
 import {
   createWorkflowData,
   getWorkflowDataByWorkflowId,
@@ -5,10 +9,10 @@ import {
   updateWorkflowData,
   updateWorkflowPlan,
 } from "@/db/queries/workflowdata";
-import { TaskType } from "@/features/editor/types/task"; 
-import { CreateFlowNode } from "@/features/editor/utils/create-flow-node"; 
+import { workflowData } from "@/db/schema";
 import { AppNode } from "@/features/editor/types/appNode";
-import { Edge } from "@xyflow/react";
+import { TaskType } from "@/features/editor/types/task";
+import { CreateFlowNode } from "@/features/editor/utils/create-flow-node";
 
 import { createTRPCRouter } from "../init";
 import { authorizedProcedure } from "../procedures/authorizedProcedure";
@@ -19,9 +23,6 @@ import {
   updateWorkflowDataSchema,
   updateWorkflowPlanSchema,
 } from "../schemas/workflowdata";
-import z from "zod";
-import { and, eq } from "drizzle-orm";
-import { workflowData } from "@/db/schema";
 
 export interface FlowData {
   nodes: AppNode[];
@@ -29,67 +30,59 @@ export interface FlowData {
 }
 
 export const workflowDataRouter = createTRPCRouter({
-  create: authorizedProcedure
-    .input(createWorkflowDataSchema)
-    .mutation(async ({ ctx: { db, userId }, input }) => {
-      try {
-        const result = await createWorkflowData(db, {
-          userId: userId,
-          workFlowId: input.workFlowId,
-          flowData: input.flowData,
-        });
-        return result;
-      } catch (error) {
-        console.error("Error creating workflow data:", error);
-        throw error;
-      }
-    }),
+  create: authorizedProcedure.input(createWorkflowDataSchema).mutation(async ({ ctx: { db, userId }, input }) => {
+    try {
+      const result = await createWorkflowData(db, {
+        userId: userId,
+        workFlowId: input.workFlowId,
+        flowData: input.flowData,
+      });
+      return result;
+    } catch (error) {
+      console.error("Error creating workflow data:", error);
+      throw error;
+    }
+  }),
 
-  remove: authorizedProcedure
-    .input(removeWorkflowDataSchema)
-    .mutation(async ({ ctx: { db, userId }, input }) => {
-      try {
-        return await removeWorkflowData(db, {
-          workflowId: input.workflowId,
-          userId: userId,
-        });
-      } catch (error) {
-        console.error("Error removing workflow data:", error);
-        throw error;
-      }
-    }),
+  remove: authorizedProcedure.input(removeWorkflowDataSchema).mutation(async ({ ctx: { db, userId }, input }) => {
+    try {
+      return await removeWorkflowData(db, {
+        workflowId: input.workflowId,
+        userId: userId,
+      });
+    } catch (error) {
+      console.error("Error removing workflow data:", error);
+      throw error;
+    }
+  }),
 
-  updateData: authorizedProcedure
-    .input(updateWorkflowDataSchema)
-    .mutation(async ({ ctx: { db, userId }, input }) => {
-      try {
-        const result = await updateWorkflowData(db, {
-          workflowId: input.workflowId,
-          userId: userId,
-          flowData: input.flowData,
-        });
-        return result;
-      } catch (error) {
-        console.error("Error updating workflow data:", error);
-        throw error;
-      }
-    }),
+  updateData: authorizedProcedure.input(updateWorkflowDataSchema).mutation(async ({ ctx: { db, userId }, input }) => {
+    try {
+      const result = await updateWorkflowData(db, {
+        workflowId: input.workflowId,
+        userId: userId,
+        flowData: input.flowData,
+      });
+      return result;
+    } catch (error) {
+      console.error("Error updating workflow data:", error);
+      throw error;
+    }
+  }),
 
-  updatePlan: authorizedProcedure
-    .input(updateWorkflowPlanSchema)
-    .mutation(async ({ ctx: { db, userId }, input }) => {
-      try {
-        const result = await updateWorkflowPlan(db, {
-          workflowId: input.workflowId,
-          userId: userId,
-          plan: input.plan,
-        });
-        return result;
-      } catch (error) {
-        console.error("Error updating workflow plan:", error);
-        throw error;
-      }
-    }),
+  updatePlan: authorizedProcedure.input(updateWorkflowPlanSchema).mutation(async ({ ctx: { db, userId }, input }) => {
+    try {
+      const result = await updateWorkflowPlan(db, {
+        workflowId: input.workflowId,
+        userId: userId,
+        plan: input.plan,
+      });
+      return result;
+    } catch (error) {
+      console.error("Error updating workflow plan:", error);
+      throw error;
+    }
+  }),
 
   getDataByWorkflowId: authorizedProcedure
     .input(getWorkflowDataByWorkflowIdSchema)

@@ -1,6 +1,7 @@
 // features/execution/hooks/use-document-generator.ts
-import { TemplateConfig, generateBatchDocuments } from "@/features/execution/lib/generate-document";
 import { useCallback, useState } from "react";
+
+import { generateBatchDocuments, TemplateConfig } from "@/features/execution/lib/generate-document";
 
 interface UseDocumentGeneratorOptions {
   onSuccess?: (result: GenerationResult) => void;
@@ -11,14 +12,14 @@ interface UseDocumentGeneratorOptions {
 interface GenerationProgress {
   current: number;
   total: number;
-  status: 'idle' | 'generating' | 'completed' | 'error';
+  status: "idle" | "generating" | "completed" | "error";
   currentFilename?: string;
 }
 
 interface GenerationResult {
   filename: string;
   downloadUrl: string;
-  format: 'single' | 'zip';
+  format: "single" | "zip";
   timestamp: Date;
 }
 
@@ -37,33 +38,34 @@ interface UseDocumentGeneratorReturn {
   reset: () => void;
 }
 
-export function useDocumentGenerator(
-  options: UseDocumentGeneratorOptions = {}
-): UseDocumentGeneratorReturn {
+export function useDocumentGenerator(options: UseDocumentGeneratorOptions = {}): UseDocumentGeneratorReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState<GenerationProgress>({
     current: 0,
     total: 0,
-    status: 'idle',
+    status: "idle",
   });
   const [lastResult, setLastResult] = useState<GenerationResult | null>(null);
 
-  const updateProgress = useCallback((update: Partial<GenerationProgress>) => {
-    setProgress(prev => ({ ...prev, ...update }));
-    options.onProgress?.({ ...progress, ...update });
-  }, [options]);
+  const updateProgress = useCallback(
+    (update: Partial<GenerationProgress>) => {
+      setProgress((prev) => ({ ...prev, ...update }));
+      options.onProgress?.({ ...progress, ...update });
+    },
+    [options]
+  );
 
   const generateDocuments = useCallback(
     async (configs: TemplateConfig[]): Promise<GenerationResult> => {
       if (configs.length === 0) {
-        throw new Error('No document configurations provided');
+        throw new Error("No document configurations provided");
       }
 
       setIsLoading(true);
       updateProgress({
         current: 0,
         total: configs.length,
-        status: 'generating',
+        status: "generating",
         currentFilename: configs[0]?.filename,
       });
 
@@ -77,26 +79,23 @@ export function useDocumentGenerator(
         });
 
         const result: GenerationResult = {
-          filename: configs.length === 1 
-            ? configs[0].filename 
-            : `documents_${new Date().toISOString().split('T')[0]}.zip`,
-          downloadUrl: '#', // This would come from generateBatchDocuments response
-          format: configs.length === 1 ? 'single' : 'zip',
+          filename:
+            configs.length === 1 ? configs[0].filename : `documents_${new Date().toISOString().split("T")[0]}.zip`,
+          downloadUrl: "#", // This would come from generateBatchDocuments response
+          format: configs.length === 1 ? "single" : "zip",
           timestamp: new Date(),
         };
 
         setLastResult(result);
-        updateProgress({ status: 'completed' });
+        updateProgress({ status: "completed" });
         options.onSuccess?.(result);
-        
+
         return result;
       } catch (error) {
         console.error("Failed to generate documents:", error);
-        updateProgress({ status: 'error' });
-        
-        const generationError = new Error(
-          error instanceof Error ? error.message : 'Failed to generate documents'
-        );
+        updateProgress({ status: "error" });
+
+        const generationError = new Error(error instanceof Error ? error.message : "Failed to generate documents");
         options.onError?.(generationError);
         throw generationError;
       } finally {
@@ -126,7 +125,7 @@ export function useDocumentGenerator(
         data: executionData.values,
         filename: executionData.filename || `document_${Date.now()}.docx`,
       };
-      
+
       return generateSingleDocument(config);
     },
     [generateSingleDocument]
@@ -137,15 +136,12 @@ export function useDocumentGenerator(
     setProgress({
       current: 0,
       total: 0,
-      status: 'idle',
+      status: "idle",
     });
     setLastResult(null);
   }, []);
 
-  const progressPercentage =
-    progress.total > 0
-      ? Math.round((progress.current / progress.total) * 100)
-      : 0;
+  const progressPercentage = progress.total > 0 ? Math.round((progress.current / progress.total) * 100) : 0;
 
   return {
     isLoading,

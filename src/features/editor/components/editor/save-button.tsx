@@ -31,7 +31,7 @@ export const SaveButton = ({ workflowId }: { workflowId: string }) => {
     <Button size={"sm"} variant={"outline"} onClick={handleSave} disabled={saveWorkflow.isPending}>
       {saveWorkflow.isPending ? (
         <>
-          <Loader2 className={"size-4 mr-1 animate-spin"} />
+          <Loader2 className={"mr-1 size-4 animate-spin"} />
           Saving
         </>
       ) : (

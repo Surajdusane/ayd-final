@@ -1,6 +1,7 @@
-import { executionPlan, reactflowData } from "@/features/editor/types/workflow";
 import { jsonb, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { nanoid } from "nanoid";
+
+import { executionPlan, reactflowData } from "@/features/editor/types/workflow";
 
 // Generate nanoid primary key
 const generateId = () => nanoid(12);
@@ -38,9 +39,6 @@ export const workflowData = pgTable("workflowdata", {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });
-
-
-
 
 export const documents = pgTable("documents", {
   id: text("id").primaryKey().notNull(),

@@ -2,11 +2,11 @@
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 
+import { cn } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 
 import { DocumetGetStarted } from "./document-get-started";
 import DocumentItem from "./document-item";
-import { cn } from "@/lib/utils";
 
 export function DocumetView() {
   const trpc = useTRPC();
@@ -17,7 +17,7 @@ export function DocumetView() {
   }
 
   return (
-    <div className={cn("flex gap-4 pt-4 flex-wrap", documents.length < 3 && "flex-nowrap")}>
+    <div className={cn("flex flex-wrap gap-4 pt-4", documents.length < 3 && "flex-nowrap")}>
       {documents.map((document) => (
         <DocumentItem key={document.id} document={document} />
       ))}

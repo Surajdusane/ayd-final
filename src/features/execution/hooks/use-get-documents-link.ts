@@ -1,6 +1,7 @@
 "use client";
 
 import { useQueryClient } from "@tanstack/react-query";
+
 import { useTRPC } from "@/trpc/client";
 import { createClient } from "@/utils/supabase/client";
 
@@ -10,15 +11,11 @@ export const useGetDocumentsLink = () => {
   const supabase = createClient();
 
   const getDocumentLink = async (id: string): Promise<string | null> => {
-    const document = await queryClient.fetchQuery(
-      trpc.documents.getById.queryOptions({ id })
-    );
+    const document = await queryClient.fetchQuery(trpc.documents.getById.queryOptions({ id }));
 
     if (!document) return null;
 
-    const { data, error } = await supabase.storage
-      .from("documents")
-      .createSignedUrl(document.path, 60);
+    const { data, error } = await supabase.storage.from("documents").createSignedUrl(document.path, 60);
 
     if (error) {
       console.error(error);

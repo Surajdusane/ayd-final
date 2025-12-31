@@ -168,7 +168,7 @@ const TextInput = ({ defaultValues, onSubmit, onDelete, disabled }: EditInputPro
             <FormItem>
               <FormLabel>Min</FormLabel>
               <FormControl>
-                <Input {...field} { ...form.register('min', { valueAsNumber: true } ) }/>
+                <Input {...field} {...form.register("min", { valueAsNumber: true })} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -181,7 +181,7 @@ const TextInput = ({ defaultValues, onSubmit, onDelete, disabled }: EditInputPro
             <FormItem>
               <FormLabel>Max</FormLabel>
               <FormControl>
-                <Input {...field} { ...form.register('max', { valueAsNumber: true } ) }/>
+                <Input {...field} {...form.register("max", { valueAsNumber: true })} />
               </FormControl>
               <FormMessage />
             </FormItem>

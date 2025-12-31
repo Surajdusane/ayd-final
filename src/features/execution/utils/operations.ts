@@ -60,9 +60,9 @@ export const OPERATION_EXECUTORS: Record<string, OperationExecutor> = {
   NUMBER_FORMAT_OPREATION: ({ node, getInput, runtime }) => {
     const num = Number(getInput("Number"));
     const format = node.data.inputs["Number Format"] ?? "western_grouping";
-    
+
     let formattedValue: string;
-    
+
     if (format === "western_grouping") {
       // Format: 1,200,000
       formattedValue = num.toLocaleString("en-US");
@@ -72,7 +72,7 @@ export const OPERATION_EXECUTORS: Record<string, OperationExecutor> = {
     } else {
       formattedValue = String(num);
     }
-    
+
     runtime.set(getOutputHandle(node, "Converted Number"), formattedValue);
   },
 

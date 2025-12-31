@@ -20,12 +20,7 @@ const PublishButton = ({ workflowId }: { workflowId: string }) => {
     });
   };
   return (
-    <Button
-      size={"sm"}
-      className="font-semibold"
-      onClick={handlePublish}
-      disabled={updatePlan.isPending}
-    >
+    <Button size={"sm"} className="font-semibold" onClick={handlePublish} disabled={updatePlan.isPending}>
       Publish
     </Button>
   );

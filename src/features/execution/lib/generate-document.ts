@@ -1,9 +1,9 @@
 "use client";
 
 import Docxtemplater from "docxtemplater";
-import PizZip from "pizzip";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
+import PizZip from "pizzip";
 
 interface GenerationResult {
   filename: string;
@@ -11,10 +11,7 @@ interface GenerationResult {
 }
 
 interface PizZipUtils {
-  getBinaryContent: (
-    url: string,
-    callback: (error: Error | null, content?: ArrayBuffer) => void
-  ) => void;
+  getBinaryContent: (url: string, callback: (error: Error | null, content?: ArrayBuffer) => void) => void;
 }
 
 let PizZipUtils: PizZipUtils | null = null;
@@ -70,8 +67,7 @@ export type TemplateConfig = {
   template: string;
   data: Record<string, string | number | boolean>;
   filename?: string;
-}
-
+};
 
 export const generateBatchDocuments = async (
   configs: TemplateConfig[],
