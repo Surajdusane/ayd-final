@@ -39,7 +39,8 @@ export const updateWorkflowName = async (db: Database, data: UpdateWorkflowName)
   const [result] = await db
     .update(workFlows)
     .set({ name })
-    .where(and(eq(workFlows.userId, userId), eq(workFlows.id, workflowId)));
+    .where(and(eq(workFlows.userId, userId), eq(workFlows.id, workflowId)))
+    .returning();
   return result;
 };
 
