@@ -17,14 +17,10 @@ const getOutputHandle = (node: AppNode, defaultKey: string = "Result"): string =
  * Enhanced input resolver that prioritizes connected inputs over static values
  * Falls back to node.data.inputs if no edge is connected
  */
-const resolveInput = (
-  ctx: OperationContext,
-  inputHandleId: string,
-  fallbackKey?: string
-): any => {
+const resolveInput = (ctx: OperationContext, inputHandleId: string, fallbackKey?: string): any => {
   // First, try to get value from connected edge
   const connectedValue = ctx.getInput(inputHandleId);
-  
+
   if (connectedValue !== undefined) {
     return connectedValue;
   }
@@ -33,14 +29,14 @@ const resolveInput = (
   // Use fallbackKey if provided, otherwise use inputHandleId
   const staticKey = fallbackKey || inputHandleId;
   const staticValue = ctx.node.data.inputs?.[staticKey];
-  
+
   if (staticValue !== undefined) {
     return staticValue;
   }
 
   console.warn(
     `No value found for input "${inputHandleId}" on node ${ctx.node.id}. ` +
-    `Neither connected edge nor static value exists.`
+      `Neither connected edge nor static value exists.`
   );
   return undefined;
 };
@@ -84,10 +80,7 @@ export const OPERATION_EXECUTORS: Record<string, OperationExecutor> = {
   LETTERCASE_OPERATION: ({ node, getInput, runtime }) => {
     const text = String(resolveInput({ node, getInput, runtime }, "Text"));
     const mode = resolveInput({ node, getInput, runtime }, "Case"); // UPPER | LOWER
-    runtime.set(
-      getOutputHandle(node, "Result"),
-      mode === "UPPER" ? text.toUpperCase() : text.toLowerCase()
-    );
+    runtime.set(getOutputHandle(node, "Result"), mode === "UPPER" ? text.toUpperCase() : text.toLowerCase());
   },
 
   NUMBER_FORMAT_OPERATION: ({ node, getInput, runtime }) => {
